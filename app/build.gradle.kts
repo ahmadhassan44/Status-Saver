@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.dagger.hilt.plugin)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -45,4 +47,15 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Dagger Hilt
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
+
+    //coroutines and runtime
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.runtime.livedata)
+    //Datastore
+    implementation(libs.androidx.datastore.preferences)
+
 }
