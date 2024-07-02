@@ -1,6 +1,8 @@
 package com.example.livesaver.onboarding
 
-data class OnBoardingEvent(
-    val GetStartedClicked:OnBoardingEvent,
-    val AppEntry:OnBoardingEvent
-)
+sealed class OnBoardingEvent{
+    object GetStartedClicked:OnBoardingEvent()
+    object SaveAppEntry:OnBoardingEvent()
+
+}
+

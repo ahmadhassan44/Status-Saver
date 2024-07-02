@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.dagger.hilt.plugin)
-    alias(libs.plugins.kotlin.kapt)
+    id ("kotlin-kapt")
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -49,13 +49,13 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //Dagger Hilt
-    implementation(libs.dagger.hilt)
-    kapt(libs.dagger.hilt.compiler)
-
+    implementation ("com.google.dagger:hilt-android:2.45")
+    kapt ("com.google.dagger:hilt-compiler:2.45")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
     //coroutines and runtime
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.androidx.runtime.livedata)
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     //Datastore
-    implementation(libs.androidx.datastore.preferences)
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
 }

@@ -1,14 +1,46 @@
 package com.example.livesaver.onboarding
 
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
 
-):ViewModel() {
-    var onBoardingState= mutableStateOf(0)
-    
+): ViewModel() {
+    private val _currentScreen = MutableLiveData<Int>()
+    val currentScreen: LiveData<Int> get() = _currentScreen
+    private val _progress=MutableLiveData<Int>()
+    val progress:LiveData<Int> get()=_progress
+    init {
+        _currentScreen.value = 1 // Start at the first screen
+        _progress.value=0
+    }
+    fun moveToNextScreen() {
+        _currentScreen.value = _currentScreen.value?.plus(1)
+    }
+    fun startProgressBar() {
+        viewModelScope.launch {
+            for (i in 1..100) {
+                delay(10) // Delay of 10ms for each increment, total of 1 second
+                _progress.value = i
+            }
+            moveToNextScreen()
+        }
+    }
+    fun onEvent(event: OnBoardingEvent) {
+        when (event) {
+            is OnBoardingEvent.GetStartedClicked -> {
+                moveToNextScreen()
+            }
+            is OnBoardingEvent.SaveAppEntry -> {
+                TODO()
+            }
+        }
+    }
 }
