@@ -1,5 +1,6 @@
 package com.example.livesaver.onboarding.usescase.appentry
 
+import android.util.Log
 import com.example.livesaver.onboarding.domain.LocalUserManager
 
 class SaveAppEntry(

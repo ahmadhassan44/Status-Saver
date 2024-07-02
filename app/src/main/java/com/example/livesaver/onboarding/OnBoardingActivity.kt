@@ -1,5 +1,6 @@
 package com.example.livesaver.onboarding
 
+import android.content.Intent
 import android.graphics.drawable.AnimatedImageDrawable
 import android.os.Build
 import android.os.Bundle
@@ -16,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.livesaver.AppUtils
 import com.example.livesaver.R
+import com.example.livesaver.home.HomeActivity
 import com.example.livesaver.onboarding.presentation.LanguageAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import org.w3c.dom.Text
-
 @AndroidEntryPoint
 class OnBoardingActivity : AppCompatActivity() {
     private val viewModel:OnBoardingViewModel by viewModels()
@@ -63,8 +64,9 @@ class OnBoardingActivity : AppCompatActivity() {
                     recyclerView.layoutManager=LinearLayoutManager(this)
                     recyclerView.adapter=adapter
                     findViewById<Button>(R.id.button3).setOnClickListener{
-                        Log.d("aht","cliked here")
                         viewModel.onEvent(OnBoardingEvent.SaveAppEntry)
+                        startActivity(Intent(this, HomeActivity::class.java))
+                        finish()
                     }
                 }
             }

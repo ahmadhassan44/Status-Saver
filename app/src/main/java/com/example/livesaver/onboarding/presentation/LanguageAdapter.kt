@@ -35,7 +35,6 @@ class LanguageAdapter(
     }
 
     override fun getItemCount(): Int {
-        Log.d("aht",languages.size.toString())
         return languages.size
     }
 

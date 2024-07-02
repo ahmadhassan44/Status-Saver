@@ -1,5 +1,6 @@
 package com.example.livesaver.onboarding
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +42,9 @@ class OnBoardingViewModel @Inject constructor(
                 moveToNextScreen()
             }
             is OnBoardingEvent.SaveAppEntry -> {
-                appEntryUsecases.saveAppEntry
+                viewModelScope.launch {
+                    appEntryUsecases.saveAppEntry()
+                }
             }
         }
     }

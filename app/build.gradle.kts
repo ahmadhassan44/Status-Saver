@@ -1,44 +1,41 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    id ("kotlin-kapt")
-    id ("com.google.dagger.hilt.android")
+    id("com.android.application")
+    id("kotlin-android")
+    alias(libs.plugins.dagger.hilt.plugin)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
-    namespace = "com.example.livesaver"
-    compileSdk = 34
+    compileSdkVersion(34)
 
     defaultConfig {
         applicationId = "com.example.livesaver"
-        minSdk = 24
-        targetSdk = 34
+        minSdkVersion(24)
+        targetSdkVersion(34)
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        namespace = "com.example.livesaver"
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,17 +45,20 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Dagger Hilt
-    implementation ("com.google.dagger:hilt-android:2.45")
-    kapt ("com.google.dagger:hilt-compiler:2.45")
+    // Dagger Hilt
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
-    //coroutines and runtime
-    implementation (libs.kotlinx.coroutines.core)
-    implementation (libs.kotlinx.coroutines.android)
-    //Datastore
-    implementation (libs.androidx.datastore.preferences)
 
-    //CircularImageView
+    // Coroutines and runtime
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+//    implementation(libs.androidx.navigation.fragment.ktx)
+//    implementation(libs.androidx.navigation.ui.ktx)
+
+    // Datastore
+    implementation(libs.androidx.datastore.preferences)
+
+    // CircularImageView
     implementation(libs.circleimageview)
-
 }
