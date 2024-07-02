@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.livesaver.onboarding.usescase.appentry.AppEntryUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
+    private val appEntryUsecases: AppEntryUsecases
 
 ): ViewModel() {
     private val _currentScreen = MutableLiveData<Int>()
@@ -21,7 +23,7 @@ class OnBoardingViewModel @Inject constructor(
         _currentScreen.value = 1 // Start at the first screen
         _progress.value=0
     }
-    fun moveToNextScreen() {
+    private fun moveToNextScreen() {
         _currentScreen.value = _currentScreen.value?.plus(1)
     }
     fun startProgressBar() {
@@ -39,7 +41,7 @@ class OnBoardingViewModel @Inject constructor(
                 moveToNextScreen()
             }
             is OnBoardingEvent.SaveAppEntry -> {
-                TODO()
+                appEntryUsecases.saveAppEntry
             }
         }
     }

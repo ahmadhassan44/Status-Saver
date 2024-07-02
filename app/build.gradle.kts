@@ -53,9 +53,12 @@ dependencies {
     kapt ("com.google.dagger:hilt-compiler:2.45")
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
     //coroutines and runtime
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
     //Datastore
-    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    implementation (libs.androidx.datastore.preferences)
+
+    //CircularImageView
+    implementation(libs.circleimageview)
 
 }
