@@ -1,6 +1,6 @@
 package com.example.livesaver.onboarding.usescases.appentry
 
-import com.example.livesaver.onboarding.domain.LocalUserManager
+import com.example.livesaver.app.domain.LocalUserManager
 
 class SaveAppEntry(
     private val localUserManager: LocalUserManager

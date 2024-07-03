@@ -1,7 +1,7 @@
 package com.example.livesaver.di
 
 import android.app.Application
-import com.example.livesaver.onboarding.domain.LocalUserManager
+import com.example.livesaver.app.domain.LocalUserManager
 import com.example.livesaver.onboarding.usescases.appentry.AppEntryUsecases
 import com.example.livesaver.onboarding.usescases.appentry.ReadAppEntry
 import com.example.livesaver.onboarding.usescases.appentry.SaveAppEntry

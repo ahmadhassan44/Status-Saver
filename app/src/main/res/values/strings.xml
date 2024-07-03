@@ -5,4 +5,9 @@
     <string name="app_info_string"><![CDATA[Save & Share for WA Status]]></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="permissions_required">Permissions Required</string>
+    <string name="please_allow_the_following_permissions_to_get_status_notifications_and_messages">Please allow the following permissions to get status, notifications and messages.</string>
+    <string name="folder_access_android_11">Folder Access Android 11</string>
+    <string name="notification_reader">Notification Reader</string>
+    <string name="allow_permissions">Allow Permissions</string>
 </resources>
