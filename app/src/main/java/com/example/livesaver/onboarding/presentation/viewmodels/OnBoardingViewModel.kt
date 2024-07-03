@@ -1,11 +1,11 @@
-package com.example.livesaver.onboarding
+package com.example.livesaver.onboarding.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.livesaver.onboarding.usescase.appentry.AppEntryUsecases
+import com.example.livesaver.onboarding.presentation.ui_events.OnBoardingEvent
+import com.example.livesaver.onboarding.usescases.appentry.AppEntryUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

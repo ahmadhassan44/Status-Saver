@@ -4,15 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.livesaver.home.HomeActivity
-import com.example.livesaver.onboarding.OnBoardingActivity
-import com.example.livesaver.onboarding.usescase.appentry.AppEntryUsecases
+import com.example.livesaver.home.presentation.activities.HomeActivity
+import com.example.livesaver.onboarding.presentation.activities.OnBoardingActivity
+import com.example.livesaver.onboarding.usescases.appentry.AppEntryUsecases
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @AndroidEntryPoint

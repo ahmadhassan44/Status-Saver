@@ -1,5 +1,6 @@
-package com.example.livesaver
+package com.example.livesaver.utilities
 
+import com.example.livesaver.R
 import java.util.Locale
 
 class AppUtils {

@@ -1,4 +1,4 @@
-package com.example.livesaver.onboarding.usescase.appentry
+package com.example.livesaver.onboarding.usescases.appentry
 
 import com.example.livesaver.onboarding.domain.LocalUserManager
 import kotlinx.coroutines.flow.Flow

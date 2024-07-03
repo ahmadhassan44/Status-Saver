@@ -3,4 +3,6 @@
     <string name="get_started">Get Started</string>
     <string name="live_status_title">Live Status</string>
     <string name="app_info_string"><![CDATA[Save & Share for WA Status]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

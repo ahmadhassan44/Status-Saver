@@ -2,9 +2,9 @@ package com.example.livesaver.di
 
 import android.app.Application
 import com.example.livesaver.onboarding.domain.LocalUserManager
-import com.example.livesaver.onboarding.usescase.appentry.AppEntryUsecases
-import com.example.livesaver.onboarding.usescase.appentry.ReadAppEntry
-import com.example.livesaver.onboarding.usescase.appentry.SaveAppEntry
+import com.example.livesaver.onboarding.usescases.appentry.AppEntryUsecases
+import com.example.livesaver.onboarding.usescases.appentry.ReadAppEntry
+import com.example.livesaver.onboarding.usescases.appentry.SaveAppEntry
 import com.loc.newsapp.data.manger.LocalUserMangerImpl
 import dagger.Module
 import dagger.Provides

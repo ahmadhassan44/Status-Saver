@@ -1,4 +1,4 @@
-package com.example.livesaver.onboarding.usescase.appentry
+package com.example.livesaver.onboarding.usescases.appentry
 
 data class AppEntryUsecases(
     val readAppEntry: ReadAppEntry,

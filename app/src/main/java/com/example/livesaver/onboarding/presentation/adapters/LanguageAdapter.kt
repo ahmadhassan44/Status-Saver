@@ -1,13 +1,11 @@
-package com.example.livesaver.onboarding.presentation
+package com.example.livesaver.onboarding.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.livesaver.AppUtils
+import com.example.livesaver.utilities.AppUtils
 import com.example.livesaver.R
 import de.hdodenhof.circleimageview.CircleImageView
 

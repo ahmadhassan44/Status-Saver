@@ -1,10 +1,9 @@
-package com.example.livesaver.onboarding
+package com.example.livesaver.onboarding.presentation.activities
 
 import android.content.Intent
 import android.graphics.drawable.AnimatedImageDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -15,15 +14,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.livesaver.AppUtils
+import com.example.livesaver.utilities.AppUtils
 import com.example.livesaver.R
-import com.example.livesaver.home.HomeActivity
-import com.example.livesaver.onboarding.presentation.LanguageAdapter
+import com.example.livesaver.home.presentation.activities.HomeActivity
+import com.example.livesaver.onboarding.presentation.ui_events.OnBoardingEvent
+import com.example.livesaver.onboarding.presentation.viewmodels.OnBoardingViewModel
+import com.example.livesaver.onboarding.presentation.adapters.LanguageAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import org.w3c.dom.Text
+
 @AndroidEntryPoint
 class OnBoardingActivity : AppCompatActivity() {
-    private val viewModel:OnBoardingViewModel by viewModels()
+    private val viewModel: OnBoardingViewModel by viewModels()
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
