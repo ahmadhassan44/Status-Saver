@@ -66,7 +66,9 @@ class OnBoardingActivity : AppCompatActivity() {
                     recyclerView.adapter=adapter
                     findViewById<Button>(R.id.button3).setOnClickListener{
                         viewModel.onEvent(OnBoardingEvent.SaveAppEntry)
-                        startActivity(Intent(this, HomeActivity::class.java))
+                        val intent=Intent(this, HomeActivity::class.java)
+                        intent.putExtra("flag",true)
+                        startActivity(intent)
                         finish()
                     }
                 }
