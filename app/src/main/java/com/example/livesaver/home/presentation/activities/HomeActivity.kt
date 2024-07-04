@@ -1,6 +1,9 @@
 package com.example.livesaver.home.presentation.activities
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -11,6 +14,7 @@ import android.widget.RadioButton
 import android.widget.Toolbar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +23,7 @@ import com.example.livesaver.R
 import com.example.livesaver.app.domain.AppMode
 import com.example.livesaver.home.presentation.adapters.FragmentPagerAdapter
 import com.example.livesaver.home.presentation.viewmodels.HomeViewModel
+import com.example.livesaver.utilities.Constants
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
@@ -26,9 +31,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.w3c.dom.Document
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(),PermissionRequester {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
@@ -37,7 +43,14 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        toolbar=findViewById(R.id.topAppBar)
+        setUpViews()
+        intent.extras?.let {
+            if(it.getBoolean("flag"))
+                showPermissionBottomSheet()
+        }
+    }
+    private fun setUpViews() {
+        toolbar = findViewById(R.id.topAppBar)
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
         adapter = FragmentPagerAdapter(supportFragmentManager, lifecycle)
@@ -58,10 +71,7 @@ class HomeActivity : AppCompatActivity() {
             showModeBottomSheet()
             true
         }
-        showPermissionBottomSheet()
-
     }
-
     private fun showPermissionBottomSheet() {
         val sheet = layoutInflater.inflate(R.layout.permissions_bottomsheet, null)
         val allowBtn=sheet.findViewById<Button>(R.id.allow)
@@ -83,11 +93,9 @@ class HomeActivity : AppCompatActivity() {
         viewModel.isChecked1.observe(this) { isChecked ->
             storageCheckBox.isChecked = isChecked
         }
-
         viewModel.isChecked2.observe(this, Observer { isChecked ->
             notificationCheckBox.isChecked = isChecked
         })
-
         viewModel.isVisable.observe(this, Observer { isVisible ->
             allowBtn.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
         })
@@ -96,16 +104,34 @@ class HomeActivity : AppCompatActivity() {
             val notificationChecked = notificationCheckBox.isChecked
             when {
                 storageChecked && notificationChecked -> {
-
                 }
                 storageChecked -> {
-                    // Request storage permission
+                    getPermission()
                 }
                 notificationChecked -> {
                     // Request notification permission
                 }
             }
             dialog.dismiss()
+        }
+    }
+    @SuppressLint("InlinedApi")
+     fun getPermission() {
+        if(viewModel.appModeState.value==AppMode.WHATSAPP) {
+            Log.d("aht","rquesting for: ${Constants.getWhatsappUri()} as mode is ${viewModel.appModeState
+                .value.toString()}")
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
+                putExtra(DocumentsContract.EXTRA_INITIAL_URI, Constants.getWhatsappUri())
+                putExtra("android.content.extra.SHOW_ADVANCED", true)
+            }
+            startActivityForResult(intent, Constants.WHATSAPP_REQUEST_CODE)
+        } else {
+            Log.d("aht","rquesting for: ${Constants.getWhatsappBusinessUri()} as mode is ${viewModel.appModeState.value.toString()}")
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
+                putExtra(DocumentsContract.EXTRA_INITIAL_URI, Constants.getWhatsappBusinessUri())
+                putExtra("android.content.extra.SHOW_ADVANCED", true)
+            }
+            startActivityForResult(intent, Constants.WHATSAPP_BUSINESS_REQUEST_CODE)
         }
     }
     private fun showModeBottomSheet(){
@@ -139,6 +165,20 @@ class HomeActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode==RESULT_OK){
+            val uri=data?.data
+            if(requestCode==Constants.WHATSAPP_REQUEST_CODE){
+                viewModel.whatsappPermissionGranted()
+            } else if(requestCode==Constants.WHATSAPP_BUSINESS_REQUEST_CODE) {
+                viewModel.whatsappBusinessPermissionGranted()
+            }
+        }
+    }
 
+    override fun requestStoragePermission() {
+        getPermission()
     }
 }

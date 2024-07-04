@@ -5,6 +5,11 @@ import com.example.livesaver.app.domain.LocalUserManager
 import com.example.livesaver.app.usecases.AppModeUsecases
 import com.example.livesaver.app.usecases.ChangeAppMode
 import com.example.livesaver.app.usecases.ReadAppMode
+import com.example.livesaver.home.permissionsUsecases.PermissionsUsecases
+import com.example.livesaver.home.permissionsUsecases.ReadWhatsAppBusinessPermission
+import com.example.livesaver.home.permissionsUsecases.ReadWhatsAppPermission
+import com.example.livesaver.home.permissionsUsecases.WhatsAppBusinessPermissionGranted
+import com.example.livesaver.home.permissionsUsecases.WhatsAppPermissionGranted
 import com.example.livesaver.onboarding.usescases.appentry.AppEntryUsecases
 import com.example.livesaver.onboarding.usescases.appentry.ReadAppEntry
 import com.example.livesaver.onboarding.usescases.appentry.SaveAppEntry
@@ -43,6 +48,18 @@ class AppModule {
         return AppModeUsecases(
             readAppMode = ReadAppMode(localUserManager),
             changeAppMode = ChangeAppMode(localUserManager)
+        )
+    }
+    @Provides
+    @Singleton
+    fun providePermissionUsecases(
+        localUserManager: LocalUserManager
+    ):PermissionsUsecases{
+        return PermissionsUsecases(
+            whatsAppPermissionGranted = WhatsAppPermissionGranted(localUserManager),
+            whatsAppBusinessPermissionGranted = WhatsAppBusinessPermissionGranted(localUserManager),
+            readWhatappPermission = ReadWhatsAppPermission(localUserManager),
+            readWhatappBusinessPermission = ReadWhatsAppBusinessPermission(localUserManager)
         )
     }
 }

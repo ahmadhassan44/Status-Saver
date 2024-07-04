@@ -10,7 +10,7 @@
         layout="@layout/no_permission_granted_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <include
         android:id="@+id/nosavedmedia"

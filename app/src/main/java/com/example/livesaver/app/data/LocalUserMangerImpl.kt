@@ -41,6 +41,29 @@ class LocalUserMangerImpl(
         }
     }
 
+    override fun readWhatsappPermission(): Flow<Boolean> {
+        return context.dataStore.data.map { preferences ->
+            preferences[PreferenceKeys.WHATSAPP_PERMISSION] ?: false
+        }
+    }
+
+    override fun readWhatsappBusinessPermission(): Flow<Boolean> {
+        return context.dataStore.data.map { preferences ->
+            preferences[PreferenceKeys.WHATSAPP_BUSINESS_PERMISSION] ?: false
+        }
+    }
+
+    override suspend fun whatsApppermissionGranted() {
+        context.dataStore.edit { settings ->
+            settings[PreferenceKeys.WHATSAPP_PERMISSION] = true
+        }
+    }
+
+    override suspend fun whatsAppBusinesspermissionGranted() {
+        context.dataStore.edit { settings ->
+            settings[PreferenceKeys.WHATSAPP_BUSINESS_PERMISSION] = true
+        }
+    }
 }
 
 private val readOnlyProperty = preferencesDataStore(name = "USER_SETTINGS")
@@ -50,4 +73,6 @@ val Context.dataStore: DataStore<Preferences> by readOnlyProperty
 private object PreferenceKeys {
     val APP_ENTRY = booleanPreferencesKey("APP_ENTRY")
     val APP_MODE = stringPreferencesKey("APP_MODE")
+    val WHATSAPP_PERMISSION = booleanPreferencesKey("WHATSAPP_PERMISSION")
+    val WHATSAPP_BUSINESS_PERMISSION = booleanPreferencesKey("WHATSAPP_BUSINESS_PERMISSION")
 }

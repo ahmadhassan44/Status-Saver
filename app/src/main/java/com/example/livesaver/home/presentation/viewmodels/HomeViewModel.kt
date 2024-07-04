@@ -7,13 +7,15 @@ import com.example.livesaver.app.domain.AppMode
 import com.example.livesaver.app.usecases.AppModeUsecases
 import com.example.livesaver.app.usecases.ChangeAppMode
 import com.example.livesaver.app.usecases.ReadAppMode
+import com.example.livesaver.home.permissionsUsecases.PermissionsUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val appModeUsecases: AppModeUsecases
+    private val appModeUsecases: AppModeUsecases,
+    private val permissionUsecases: PermissionsUsecases
 ):ViewModel() {
     private val _isChecked1 = MutableLiveData<Boolean>()
     val isChecked1: MutableLiveData<Boolean> = _isChecked1
@@ -40,6 +42,7 @@ class HomeViewModel @Inject constructor(
                 _appModeState.value=it
             }
         }
+        determineAppUiBasedOnModeAndPermission()
     }
     fun onCheckbox1Toggled(isChecked: Boolean) {
         _isChecked1.value = isChecked
@@ -57,6 +60,32 @@ class HomeViewModel @Inject constructor(
     fun changeAppMode(newMode: AppMode) {
         viewModelScope.launch {
             appModeUsecases.changeAppMode.invoke(newMode)
+            determineAppUiBasedOnModeAndPermission()
+        }
+    }
+    fun whatsappPermissionGranted(){
+        viewModelScope.launch {
+            permissionUsecases.whatsAppPermissionGranted.invoke()
+            determineAppUiBasedOnModeAndPermission()
+        }
+    }
+    fun whatsappBusinessPermissionGranted(){
+        viewModelScope.launch {
+            permissionUsecases.whatsAppBusinessPermissionGranted.invoke()
+            determineAppUiBasedOnModeAndPermission()
+        }
+    }
+    fun determineAppUiBasedOnModeAndPermission(){
+        if(_appModeState.value==AppMode.WHATSAPP){
+            viewModelScope.launch {
+                permissionUsecases.readWhatappPermission.invoke().collect{
+                    if(it){
+                        _noPermissionState.value=false
+                    }else{
+                        _noPermissionState.value=true
+                    }
+                }
+            }
         }
     }
 }
