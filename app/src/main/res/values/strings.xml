@@ -10,4 +10,7 @@
     <string name="folder_access_android_11">Folder Access Android 11</string>
     <string name="notification_reader">Notification Reader</string>
     <string name="allow_permissions">Allow Permissions</string>
+    <string name="please_first_watch_the_status_on_whatsapp">Please first watch the Status on WhatsApp</string>
+    <string name="no_media_available">No Media Available</string>
+    <string name="watch_status">Watch Status</string>
 </resources>

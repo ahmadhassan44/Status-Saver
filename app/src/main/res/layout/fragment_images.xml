@@ -5,10 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".home.presentation.fragments.ImagesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include
+        android:id="@+id/nopermissionsview"
+        layout="@layout/no_permission_granted_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="imsges" />
+        android:visibility="visible" />
+
+    <include
+        android:id="@+id/loadingview"
+        layout="@layout/no_images_available"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
 </FrameLayout>
