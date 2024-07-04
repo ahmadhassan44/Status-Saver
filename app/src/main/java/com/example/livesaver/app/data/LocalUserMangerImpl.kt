@@ -10,7 +10,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.livesaver.app.domain.AppMode
 import com.example.livesaver.app.domain.LocalUserManager
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class LocalUserMangerImpl(
@@ -22,27 +21,16 @@ class LocalUserMangerImpl(
             settings[PreferenceKeys.APP_ENTRY] = true
         }
     }
+
     override fun readAppEntry(): Flow<Boolean> {
         return context.dataStore.data.map { preferences ->
             preferences[PreferenceKeys.APP_ENTRY] ?: false
         }
     }
 
-    override suspend fun chnageAppMode() {
+    override suspend fun changeAppMode(newmode: AppMode) {
         context.dataStore.edit { settings ->
-            val currentMode = context.dataStore.data.map { preferences ->
-                preferences[PreferenceKeys.APP_MODE] ?: AppMode.WHATSAPP.name
-            }.first()
-
-            val newMode = if (currentMode == AppMode.WHATSAPP.name) {
-                AppMode.WHATSAPP_BUSINESS.name
-            } else {
-                AppMode.WHATSAPP.name
-            }
-
-            context.dataStore.edit { settings ->
-                settings[PreferenceKeys.APP_MODE] = newMode
-            }
+            settings[PreferenceKeys.APP_MODE] = newmode.name
         }
     }
 
@@ -61,5 +49,5 @@ val Context.dataStore: DataStore<Preferences> by readOnlyProperty
 
 private object PreferenceKeys {
     val APP_ENTRY = booleanPreferencesKey("APP_ENTRY")
-    val APP_MODE= stringPreferencesKey("APP_MODE")
+    val APP_MODE = stringPreferencesKey("APP_MODE")
 }

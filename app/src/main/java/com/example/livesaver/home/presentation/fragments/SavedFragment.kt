@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import com.example.livesaver.R
 
 class SavedFragment : Fragment() {
+    private lateinit var savedScreen:View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_saved, container, false)
+        savedScreen= inflater.inflate(R.layout.fragment_saved, container, false)
+        return savedScreen
     }
+
 
 }

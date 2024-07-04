@@ -10,4 +10,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">17dp</item>
     </style>
+    <style name="AppTitleInToolbar" >
+        <item name="fontFamily">@font/sofiaproregular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24dp</item>
+    </style>
 </resources>
