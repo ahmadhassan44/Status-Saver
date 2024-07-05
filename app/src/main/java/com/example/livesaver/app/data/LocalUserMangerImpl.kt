@@ -1,6 +1,8 @@
 package com.loc.newsapp.data.manger
 
 import android.content.Context
+import android.net.Uri
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -64,6 +66,29 @@ class LocalUserMangerImpl(
             settings[PreferenceKeys.WHATSAPP_BUSINESS_PERMISSION] = true
         }
     }
+
+    override suspend fun savewhatsappfolderuri(uri: Uri) {
+        context.dataStore.edit { settings ->
+            settings[PreferenceKeys.WHATSAPP_FOLDER_URI] = uri.toString()
+        }
+    }
+    override suspend fun savewhatsappbusinessfolderuri(uri: Uri) {
+        context.dataStore.edit { settings ->
+            settings[PreferenceKeys.WHATSAPP_BUSINESS_FOLDER_URI] = uri.toString()
+        }
+    }
+
+    override fun readwhatsappfolderuri(): Flow<String> {
+        return context.dataStore.data.map { preferences ->
+            preferences[PreferenceKeys.WHATSAPP_FOLDER_URI]!!
+        }
+    }
+
+    override fun readwhatsappbusinessfolderuri(): Flow<String> {
+        return context.dataStore.data.map { preferences ->
+            preferences[PreferenceKeys.WHATSAPP_BUSINESS_FOLDER_URI]!!
+        }
+    }
 }
 
 private val readOnlyProperty = preferencesDataStore(name = "USER_SETTINGS")
@@ -75,4 +100,6 @@ private object PreferenceKeys {
     val APP_MODE = stringPreferencesKey("APP_MODE")
     val WHATSAPP_PERMISSION = booleanPreferencesKey("WHATSAPP_PERMISSION")
     val WHATSAPP_BUSINESS_PERMISSION = booleanPreferencesKey("WHATSAPP_BUSINESS_PERMISSION")
+    val WHATSAPP_FOLDER_URI = stringPreferencesKey("WHATSAPP_FOLDER_URI")
+    val WHATSAPP_BUSINESS_FOLDER_URI = stringPreferencesKey("WHATSAPP_BUSINESS_FOLDER_URI")
 }

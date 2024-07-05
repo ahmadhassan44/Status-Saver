@@ -1,4 +1,4 @@
-package com.example.livesaver.home.permissionsUsecases
+package com.example.livesaver.home.usecases.permissions
 
 data class PermissionsUsecases(
     val readWhatappPermission: ReadWhatsAppPermission,

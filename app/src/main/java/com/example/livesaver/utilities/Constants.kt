@@ -20,7 +20,7 @@ object Constants {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             WHATSAPP_PATH_URI_ANDROID_11
         } else {
-            WHATSAPP_PATH_URI_ANDROID
+            WHATSAPP_PATH_URI_ANDROID_11
         }
     }
 

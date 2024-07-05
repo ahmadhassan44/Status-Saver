@@ -153,17 +153,12 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         }
         wacheck.setOnClickListener {
             viewModel.changeAppMode(AppMode.WHATSAPP)
-            lifecycleScope.launch {
-                delay(400)
-                dialog.dismiss()
-            }
+            dialog.dismiss()
         }
         wabcheck.setOnClickListener {
             viewModel.changeAppMode(AppMode.WHATSAPP_BUSINESS)
-            lifecycleScope.launch {
-                delay(400)
-                dialog.dismiss()
-            }
+            dialog.dismiss()
+
         }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -171,9 +166,10 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         if(resultCode==RESULT_OK){
             val uri=data?.data
             if(requestCode==Constants.WHATSAPP_REQUEST_CODE){
-                viewModel.whatsappPermissionGranted()
+                viewModel.whatsappPermissionGranted(uri!!)
+
             } else if(requestCode==Constants.WHATSAPP_BUSINESS_REQUEST_CODE) {
-                viewModel.whatsappBusinessPermissionGranted()
+                viewModel.whatsappBusinessPermissionGranted(uri!!)
             }
         }
     }

@@ -64,4 +64,6 @@ dependencies {
 
     // CircularImageView
     implementation(libs.circleimageview)
+    //Glide
+    implementation(libs.glide)
 }

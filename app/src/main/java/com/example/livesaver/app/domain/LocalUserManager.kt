@@ -1,5 +1,6 @@
 package com.example.livesaver.app.domain
 
+import android.net.Uri
 import kotlinx.coroutines.flow.Flow
 
 interface LocalUserManager {
@@ -11,4 +12,10 @@ interface LocalUserManager {
     fun readWhatsappBusinessPermission():Flow<Boolean>
     suspend fun whatsApppermissionGranted()
     suspend fun whatsAppBusinesspermissionGranted()
+    suspend fun savewhatsappfolderuri(uri:Uri)
+    suspend fun savewhatsappbusinessfolderuri(uri:Uri)
+    fun readwhatsappfolderuri():Flow<String>
+    fun readwhatsappbusinessfolderuri():Flow<String>
+
+
 }

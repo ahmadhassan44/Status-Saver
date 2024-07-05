@@ -1,13 +1,13 @@
 package com.example.livesaver.home.presentation.viewmodels
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.livesaver.app.domain.AppMode
 import com.example.livesaver.app.usecases.AppModeUsecases
-import com.example.livesaver.app.usecases.ChangeAppMode
-import com.example.livesaver.app.usecases.ReadAppMode
-import com.example.livesaver.home.permissionsUsecases.PermissionsUsecases
+import com.example.livesaver.home.usecases.folderUri.FolderUriUsecases
+import com.example.livesaver.home.usecases.permissions.PermissionsUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val appModeUsecases: AppModeUsecases,
-    private val permissionUsecases: PermissionsUsecases
+    private val permissionUsecases: PermissionsUsecases,
+    private val folderUriUsecases: FolderUriUsecases
 ):ViewModel() {
     private val _isChecked1 = MutableLiveData<Boolean>()
     val isChecked1: MutableLiveData<Boolean> = _isChecked1
@@ -63,16 +64,18 @@ class HomeViewModel @Inject constructor(
             determineAppUiBasedOnModeAndPermission()
         }
     }
-    fun whatsappPermissionGranted(){
+    fun whatsappPermissionGranted(uri:Uri){
         viewModelScope.launch {
             permissionUsecases.whatsAppPermissionGranted.invoke()
             determineAppUiBasedOnModeAndPermission()
+            folderUriUsecases.whatsappFolderUri.invoke(uri)
         }
     }
-    fun whatsappBusinessPermissionGranted(){
+    fun whatsappBusinessPermissionGranted(uri:Uri){
         viewModelScope.launch {
             permissionUsecases.whatsAppBusinessPermissionGranted.invoke()
             determineAppUiBasedOnModeAndPermission()
+            folderUriUsecases.whatsappBusinessUri.invoke(uri)
         }
     }
     fun determineAppUiBasedOnModeAndPermission(){

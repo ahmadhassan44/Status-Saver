@@ -1,4 +1,4 @@
-package com.example.livesaver.home.permissionsUsecases
+package com.example.livesaver.home.usecases.permissions
 
 import com.example.livesaver.app.domain.LocalUserManager
 import kotlinx.coroutines.flow.Flow
