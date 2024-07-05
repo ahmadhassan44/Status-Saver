@@ -177,4 +177,17 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
     override fun requestStoragePermission() {
         getPermission()
     }
+
+    override fun onBackPressed() {
+        val sheet=layoutInflater.inflate(R.layout.exit_bottom_sheet,null)
+        val dialog=BottomSheetDialog(this)
+        dialog.setContentView(sheet)
+        dialog.show()
+        sheet.findViewById<Button>(R.id.exit).setOnClickListener{
+            finishAffinity()
+        }
+        sheet.findViewById<Button>(R.id.notnow).setOnClickListener {
+            dialog.dismiss()
+        }
+    }
 }

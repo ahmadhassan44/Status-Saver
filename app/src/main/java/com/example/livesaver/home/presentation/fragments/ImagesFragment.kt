@@ -56,12 +56,6 @@ class ImagesFragment : Fragment() {
                     imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
                     val recView = imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)
                     recView.visibility = View.VISIBLE
-                    recView.layoutManager = GridLayoutManager(requireContext(),3)
-                    // Fetch images from ImagesViewModel
-                    imagesViewModel.imagesLiveData.observe(viewLifecycleOwner) { images ->
-                        recView.adapter = MediaAdapter(images)
-                    }
-                    imagesViewModel.fetchWhatsappStatuses(requireActivity())
                 }
             }
         }
@@ -78,23 +72,6 @@ class ImagesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launch {
-            // Observe permission state from HomeViewModel
-            homeViewModel.noPermissionState.observe(viewLifecycleOwner) { noPermission ->
-                if (noPermission) {
-                    imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.VISIBLE
-                } else {
-                    imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
-                    val recView = imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)
-                    recView.visibility = View.VISIBLE
-                    recView.layoutManager = GridLayoutManager(requireContext(),3)
-                    // Fetch images from ImagesViewModel
-                    imagesViewModel.imagesLiveData.observe(viewLifecycleOwner) { images ->
-                        recView.adapter = MediaAdapter(images)
-                    }
-                    imagesViewModel.fetchWhatsappStatuses(requireActivity())
-                }
-            }
-        }
+
     }
 }
