@@ -152,13 +152,18 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
             }
         }
         wacheck.setOnClickListener {
-            viewModel.changeAppMode(AppMode.WHATSAPP)
-            dialog.dismiss()
+            lifecycleScope.launch {
+                viewModel.changeAppMode(AppMode.WHATSAPP)
+                delay(300)
+                dialog.dismiss()
+            }
         }
         wabcheck.setOnClickListener {
-            viewModel.changeAppMode(AppMode.WHATSAPP_BUSINESS)
-            dialog.dismiss()
-
+            lifecycleScope.launch {
+                viewModel.changeAppMode(AppMode.WHATSAPP_BUSINESS)
+                delay(300)
+                dialog.dismiss()
+            }
         }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

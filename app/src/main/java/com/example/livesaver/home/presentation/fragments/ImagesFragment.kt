@@ -52,10 +52,9 @@ class ImagesFragment : Fragment() {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) { noPermission ->
                 if (noPermission) {
                     imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.VISIBLE
+                    imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview).visibility=View.GONE
                 } else {
                     imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
-                    val recView = imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)
-                    recView.visibility = View.VISIBLE
                 }
             }
         }
@@ -72,6 +71,15 @@ class ImagesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        val recyclerview=imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)
+        recyclerview.layoutManager=GridLayoutManager(requireActivity(),3)
+        lifecycleScope.launch {
+            imagesViewModel.fetchImages(requireActivity())
+        }
+        imagesViewModel.imagesList.observe(requireActivity()){
+            val adapter=MediaAdapter(it)
+            recyclerview.adapter=adapter
+        }
 
     }
 }

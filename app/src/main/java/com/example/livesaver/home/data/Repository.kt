@@ -24,7 +24,7 @@ class Repository @Inject constructor(
     val whatsappStatuses = MutableLiveData<ArrayList<MediaModel>>(ArrayList())
     val whatsappBusinessStatuses = MutableLiveData<ArrayList<MediaModel>>(ArrayList())
 
-    suspend fun fetchWhatsappStatuses(activity: Activity): ArrayList<MediaModel> {
+    suspend fun fetchWhatsappStatuses(activity: Activity): MutableLiveData<ArrayList<MediaModel>> {
         try {
             val folderUriString = localUserManager.readwhatsappfolderuri().first()
             val folderUri = Uri.parse(folderUriString)
@@ -58,14 +58,14 @@ class Repository @Inject constructor(
                     }
                 }
                 whatsappStatuses.postValue(mediaList)
-                return mediaList
+                return whatsappStatuses
             } else {
                 Log.e("Repository", "Failed to read directory.")
             }
         } catch (e: Exception) {
             Log.e("Repository", "Error fetching WhatsApp statuses: ${e.message}")
         }
-        return ArrayList()
+        return MutableLiveData<ArrayList<MediaModel>>()
     }
 
     fun fetchWhatsappBusinessStatuses(activity: Activity): ArrayList<MediaModel> {
