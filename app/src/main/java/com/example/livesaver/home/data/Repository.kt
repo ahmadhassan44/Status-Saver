@@ -21,17 +21,18 @@ class Repository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val localUserManager: LocalUserManager
 ) {
-    val whatsappStatuses = MutableLiveData<ArrayList<MediaModel>>(ArrayList())
-    val whatsappBusinessStatuses = MutableLiveData<ArrayList<MediaModel>>(ArrayList())
 
-    suspend fun fetchWhatsappStatuses(activity: Activity): MutableLiveData<ArrayList<MediaModel>> {
+    val whatsappStatuses = MutableLiveData<ArrayList<MediaModel>>(ArrayList<MediaModel>())
+
+    suspend fun fetchWhatsappStatuses(): ArrayList<MediaModel>{
         try {
             val folderUriString = localUserManager.readwhatsappfolderuri().first()
             val folderUri = Uri.parse(folderUriString)
 
             withContext(Dispatchers.Main) {
                 try {
-                    activity.contentResolver.takePersistableUriPermission(
+                    // Request permission to access the folder URI
+                    context.contentResolver.takePersistableUriPermission(
                         folderUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
                 } catch (e: SecurityException) {
@@ -39,10 +40,12 @@ class Repository @Inject constructor(
                 }
             }
 
+            // Fetch the document file from the folder URI
             val fileDocument = withContext(Dispatchers.IO) {
                 DocumentFile.fromTreeUri(context, folderUri)
             }
 
+            // Process the fetched documents if they are readable
             if (fileDocument != null && fileDocument.canRead()) {
                 val mediaList = ArrayList<MediaModel>()
                 fileDocument.listFiles().forEach { file ->
@@ -55,66 +58,20 @@ class Repository @Inject constructor(
                                 mediaType = fileType,
                             )
                         )
+                        Log.d("Repository", "Added ${file.name}")
                     }
                 }
+                // Update the LiveData with the fetched media list
                 whatsappStatuses.postValue(mediaList)
-                return whatsappStatuses
+                return mediaList
+                Log.d("Repository", "WhatsApp statuses fetched successfully with length ${mediaList.size}")
             } else {
                 Log.e("Repository", "Failed to read directory.")
             }
         } catch (e: Exception) {
             Log.e("Repository", "Error fetching WhatsApp statuses: ${e.message}")
         }
-        return MutableLiveData<ArrayList<MediaModel>>()
-    }
-
-    fun fetchWhatsappBusinessStatuses(activity: Activity): ArrayList<MediaModel> {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val folderUriString = localUserManager.readwhatsappbusinessfolderuri().first()
-                val folderUri = Uri.parse(folderUriString)
-
-                withContext(Dispatchers.Main) {
-                    try {
-                        activity.contentResolver.takePersistableUriPermission(
-                            folderUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        )
-
-                    } catch (e: SecurityException) {
-                        Log.e("Repository", "Permission error: ${e.message}")
-                        return@withContext
-                    }
-                }
-
-                val fileDocument = DocumentFile.fromTreeUri(context, folderUri)
-                if (fileDocument != null && fileDocument.canRead()) {
-                    val mediaList = ArrayList<MediaModel>()
-                    fileDocument.listFiles().forEach { file ->
-                        if (file.name != ".nomedia" && file.isFile) {
-                            val fileType = if (getFileExtension(file.name!!) == "mp4") "video" else "image"
-                            mediaList.add(
-                                MediaModel(
-                                    pathUri = file.uri.toString(),
-                                    fileName = file.name.toString(),
-                                    mediaType = fileType,
-                                )
-                            )
-                        }
-                    }
-                    withContext(Dispatchers.Main) {
-                        whatsappBusinessStatuses.value = mediaList
-                        for(i in mediaList){
-                        }
-                    }
-                } else {
-                    Log.e("Repository", "Failed to read directory.")
-                }
-            } catch (e: Exception) {
-                Log.e("Repository", "Error fetching WhatsApp statuses: ${e.message}")
-            }
-        }
-        return whatsappBusinessStatuses.value!!
-
+        return ArrayList()
     }
 
     private fun getFileExtension(fileName: String): String {

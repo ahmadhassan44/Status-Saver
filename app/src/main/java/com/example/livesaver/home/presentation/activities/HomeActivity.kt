@@ -154,14 +154,14 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         wacheck.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.changeAppMode(AppMode.WHATSAPP)
-                delay(300)
+                delay(200)
                 dialog.dismiss()
             }
         }
         wabcheck.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.changeAppMode(AppMode.WHATSAPP_BUSINESS)
-                delay(300)
+                delay(200)
                 dialog.dismiss()
             }
         }

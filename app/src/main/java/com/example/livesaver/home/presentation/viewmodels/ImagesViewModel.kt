@@ -1,5 +1,6 @@
 package com.example.livesaver.home.presentation.viewmodels
 
+
 import android.app.Activity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,7 @@ class ImagesViewModel @Inject constructor(
     val imagesList:MutableLiveData<ArrayList<MediaModel>>
         get() = _imagesList
 
-    suspend fun fetchImages(activity: Activity){
-        _imagesList=repository.fetchWhatsappStatuses(activity)
+    fun fetchImages(activity: Activity){
+
     }
 }

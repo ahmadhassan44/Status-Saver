@@ -1,6 +1,10 @@
 package com.example.livesaver.home.presentation.activities
 
+import android.media.Image
+import android.net.Uri
 import android.os.Bundle
+import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,12 +14,10 @@ import com.example.livesaver.R
 class ImagePreviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_image_preview)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        findViewById<ImageView>(R.id.imageView5).setImageURI(Uri.parse(intent.getStringExtra("pathUri")))
+        findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
+            onBackPressed()
         }
     }
 }
