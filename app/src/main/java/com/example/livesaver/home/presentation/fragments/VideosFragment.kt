@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.livesaver.R
 import com.example.livesaver.home.domain.MediaModel
 import com.example.livesaver.home.presentation.activities.PermissionRequester
@@ -26,6 +27,7 @@ class VideosFragment : Fragment() {
     private lateinit var videosScreen:View
     private val homeViewModel: HomeViewModel by activityViewModels()
     private var permissionRequester: PermissionRequester? = null
+    private lateinit var swipeToRefreshLayout: SwipeRefreshLayout
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is PermissionRequester) {
@@ -51,6 +53,11 @@ class VideosFragment : Fragment() {
                     videosScreen.findViewById<RecyclerView>(R.id.videosrecview).visibility =
                         View.GONE
                 } else {
+                    swipeToRefreshLayout=videosScreen.findViewById(R.id.videoRefresh)
+                    swipeToRefreshLayout.setOnRefreshListener {
+                        homeViewModel.refreshRepository()
+                        swipeToRefreshLayout.isRefreshing=false
+                    }
                     videosScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
                     val recView = videosScreen.findViewById<RecyclerView>(R.id.videosrecview)
                     recView.layoutManager = GridLayoutManager(requireActivity(), 3)

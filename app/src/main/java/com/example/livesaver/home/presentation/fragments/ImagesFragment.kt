@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.livesaver.R
 import com.example.livesaver.home.domain.MediaModel
 import com.example.livesaver.home.presentation.activities.PermissionRequester
@@ -27,6 +28,7 @@ class ImagesFragment : Fragment() {
     private lateinit var imagesScreen: View
     private val homeViewModel: HomeViewModel by activityViewModels()
     private var permissionRequester: PermissionRequester? = null
+    private lateinit var swipeToRefreshLayout: SwipeRefreshLayout
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,9 +56,14 @@ class ImagesFragment : Fragment() {
                 if (noPermission) {
                     imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility =
                         View.VISIBLE
-                    imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview).visibility =
+                    imagesScreen.findViewById<RecyclerView>(R.id.refresh).visibility =
                         View.GONE
                 } else {
+                    swipeToRefreshLayout=imagesScreen.findViewById(R.id.refresh)
+                    swipeToRefreshLayout.setOnRefreshListener {
+                        homeViewModel.refreshRepository()
+                        swipeToRefreshLayout.isRefreshing=false
+                    }
                     homeViewModel.refreshRepository()
                     imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
                     val recView=imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)

@@ -5,11 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".home.presentation.fragments.ImagesFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/imagesrecview"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imagesrecview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include
         android:id="@+id/nopermissionsview"

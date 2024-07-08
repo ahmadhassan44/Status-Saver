@@ -200,9 +200,8 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         }
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        Log.d("aht", "refreshing")
-        viewModel.refreshRepository()
-    }
+//    override fun onRestart() {
+//        super.onRestart()
+//        viewModel.refreshRepository()
+//    }
 }
