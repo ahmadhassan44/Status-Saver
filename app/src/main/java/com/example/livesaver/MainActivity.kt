@@ -10,6 +10,7 @@ import com.example.livesaver.home.presentation.activities.HomeActivity
 import com.example.livesaver.onboarding.presentation.activities.OnBoardingActivity
 import com.example.livesaver.onboarding.usescases.appentry.AppEntryUsecases
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @AndroidEntryPoint
@@ -18,15 +19,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var appEntryUsecases: AppEntryUsecases
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
         lifecycleScope.launch {
             appEntryUsecases.readAppEntry().collect{
-                Log.d("aht", "onCreate: $it")
                 if(!it) {
+                    delay(300)
                     startActivity(Intent(applicationContext, OnBoardingActivity::class.java))
                     finish()
                 }
                 else{
+                    delay(300)
                     startActivity(Intent(applicationContext, HomeActivity::class.java))
                     finish()
                 }

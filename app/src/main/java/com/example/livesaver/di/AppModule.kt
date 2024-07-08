@@ -1,5 +1,6 @@
 package com.example.livesaver.di
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.example.livesaver.app.domain.LocalUserManager
@@ -87,7 +88,7 @@ class AppModule {
     @Singleton
     fun provideRepo(
         context: Context,
-        localUserManager: LocalUserManager
+        localUserManager: LocalUserManager,
     ):Repository{
         return Repository(
             context =context,
