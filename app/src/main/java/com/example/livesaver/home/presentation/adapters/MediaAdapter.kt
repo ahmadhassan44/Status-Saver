@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.livesaver.R
 import com.example.livesaver.home.domain.MediaModel
 import com.example.livesaver.home.presentation.activities.ImagePreviewActivity
+import com.example.livesaver.home.presentation.activities.VideoPreviewActivity
 
 class MediaAdapter(
     private val mediaList: ArrayList<MediaModel>
@@ -19,23 +20,32 @@ class MediaAdapter(
 
         private val imageView=itemView.findViewById<ImageView>(R.id.imageView)
         private val newLabel=itemView.findViewById<TextView>(R.id.newLabel)
+        private val playIcon=itemView.findViewById<ImageView>(R.id.playicon)
         fun bind(mediaModel: MediaModel) {
             Glide.with(itemView.context).load(mediaModel.pathUri).placeholder(R.drawable
                 .baseline_photo_24).into(imageView)
+            if(mediaModel.mediaType=="video")
+                playIcon.visibility=View.VISIBLE
             if (mediaModel.isDownloaded) {
                 newLabel.visibility = View.GONE
             } else {
                 newLabel.visibility = View.VISIBLE
             }
             itemView.setOnClickListener {
-                val intent= Intent(itemView.context,ImagePreviewActivity::class.java)
-                intent.putExtra("pathUri",mediaModel.pathUri)
-                itemView.context.startActivity(intent)
+                if(mediaModel.mediaType=="image"){
+                    val intent= Intent(itemView.context,ImagePreviewActivity::class.java)
+                    intent.putExtra("pathUri",mediaModel.pathUri)
+                    itemView.context.startActivity(intent)
+                } else {
+                    val intent= Intent(itemView.context, VideoPreviewActivity::class.java)
+                    intent.putExtra("pathUri",mediaModel.pathUri)
+                    itemView.context.startActivity(intent)
+                }
             }
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.images_recycler_view_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.media_recycler_view_item, parent, false)
         return ViewHolder(view)
     }
     override fun getItemCount(): Int {

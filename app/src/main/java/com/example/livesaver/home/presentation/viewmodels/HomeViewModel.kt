@@ -60,6 +60,7 @@ class HomeViewModel @Inject constructor(
         }
         determineAppUiBasedOnModeAndPermission()
         fetchWhatsappImages()
+        fetchWhatsappVideos()
     }
 
     fun onCheckbox1Toggled(isChecked: Boolean) {
@@ -125,6 +126,24 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+    fun fetchWhatsappVideos(){
+        if (appModeState.value == AppMode.WHATSAPP) {
+            viewModelScope.launch {
+                val statuses =repository.fetchWhatsappStatuses()
+                Log.d("HomeViewModel",statuses.size.toString())
+                _videoStatuses.value = ArrayList(statuses.filter { it.mediaType == "video" })
+                Log.d("HomeViewModel", "fetchWhatsappVideos: ${repository.whatsappStatuses.value}")
+            }
+        } else {
+            viewModelScope.launch {
 
+            }
+        }
+    }
+
+    fun refreshRepository() {
+        fetchWhatsappImages()
+        fetchWhatsappVideos()
+    }
 
 }

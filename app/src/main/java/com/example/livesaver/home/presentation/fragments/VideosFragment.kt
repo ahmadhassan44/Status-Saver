@@ -10,11 +10,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.livesaver.R
+import com.example.livesaver.home.domain.MediaModel
 import com.example.livesaver.home.presentation.activities.PermissionRequester
+import com.example.livesaver.home.presentation.adapters.MediaAdapter
 import com.example.livesaver.home.presentation.viewmodels.HomeViewModel
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
 class VideosFragment : Fragment() {
     private lateinit var videosScreen:View
@@ -39,16 +45,37 @@ class VideosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launch {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) {
-                if(it){
-                    videosScreen.findViewById<View>(R.id.nopermissionsview).visibility=View.VISIBLE
+                if (it) {
+                    videosScreen.findViewById<View>(R.id.nopermissionsview).visibility =
+                        View.VISIBLE
+                    videosScreen.findViewById<RecyclerView>(R.id.videosrecview).visibility =
+                        View.GONE
+                } else {
+                    videosScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
+                    val recView = videosScreen.findViewById<RecyclerView>(R.id.videosrecview)
+                    recView.layoutManager = GridLayoutManager(requireActivity(), 3)
+                    val adapter = MediaAdapter(
+                        ArrayList<MediaModel>()
+                    )
+                    recView.adapter = adapter
+                    homeViewModel.videoStatuses.observe(viewLifecycleOwner, Observer { statuses ->
+                        statuses?.let {
+                            adapter.updateList(it)
+                            if (it.isEmpty()) {
+                                videosScreen.findViewById<View>(R.id.noImagesView).visibility =
+                                    View.VISIBLE
+                            } else {
+                                videosScreen.findViewById<View>(R.id.noImagesView).visibility =
+                                    View.GONE
+                            }
+                            Log.d("VideosFragment", "Adapter updated with list of size: ${it.size}")
+                        }
+                    })
                 }
-                else
-                    videosScreen.findViewById<View>(R.id.nopermissionsview).visibility=View.GONE
             }
         }
         videosScreen.findViewById<View>(R.id.nopermissionsview).findViewById<Button>(R.id.button).setOnClickListener {
             permissionRequester?.requestStoragePermission()
-            Log.d("ahr","clicked1")
         }
     }
     override fun onDetach() {

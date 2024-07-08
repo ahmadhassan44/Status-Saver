@@ -2,7 +2,6 @@ package com.example.livesaver.home.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.provider.MediaStore.Audio.Media
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,6 @@ import com.example.livesaver.home.domain.MediaModel
 import com.example.livesaver.home.presentation.activities.PermissionRequester
 import com.example.livesaver.home.presentation.adapters.MediaAdapter
 import com.example.livesaver.home.presentation.viewmodels.HomeViewModel
-import com.example.livesaver.home.presentation.viewmodels.ImagesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.ArrayList
@@ -52,21 +50,23 @@ class ImagesFragment : Fragment() {
 
         lifecycleScope.launch {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) { noPermission ->
+                Log.d("Permission","permission state:$noPermission")
                 if (noPermission) {
                     imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility =
                         View.VISIBLE
                     imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview).visibility =
                         View.GONE
                 } else {
+                    homeViewModel.refreshRepository()
                     imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
                     val recView=imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)
                     recView.layoutManager=GridLayoutManager(requireActivity(),3)
                     val adapter=MediaAdapter(
                         ArrayList<MediaModel>()
                     )
-                    recView.adapter=adapter
                     homeViewModel.imageStatuses.observe(viewLifecycleOwner, Observer { statuses ->
                         statuses?.let {
+                            Log.d("Permission", "Updating adapter with list of size: ${it.size}")
                             adapter.updateList(it)
                             if(it.isEmpty()){
                                 imagesScreen.findViewById<View>(R.id.noImagesView).visibility=View.VISIBLE
@@ -74,9 +74,10 @@ class ImagesFragment : Fragment() {
                             else{
                                 imagesScreen.findViewById<View>(R.id.noImagesView).visibility=View.GONE
                             }
-                            Log.d("StatusesFragment", "Adapter updated with list of size: ${it.size}")
+                            Log.d("ImagesFragment", "Adapter updated with list of size: ${it.size}")
                         }
                     })
+                    recView.adapter=adapter
                 }
             }
         }
@@ -89,6 +90,11 @@ class ImagesFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         permissionRequester = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.refreshRepository()
     }
 
 

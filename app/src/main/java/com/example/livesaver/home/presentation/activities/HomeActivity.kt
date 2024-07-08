@@ -118,15 +118,12 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
     @SuppressLint("InlinedApi")
      fun getPermission() {
         if(viewModel.appModeState.value==AppMode.WHATSAPP) {
-            Log.d("aht","rquesting for: ${Constants.getWhatsappUri()} as mode is ${viewModel.appModeState
-                .value.toString()}")
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
+                        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
                 putExtra(DocumentsContract.EXTRA_INITIAL_URI, Constants.getWhatsappUri())
                 putExtra("android.content.extra.SHOW_ADVANCED", true)
             }
             startActivityForResult(intent, Constants.WHATSAPP_REQUEST_CODE)
         } else {
-            Log.d("aht","rquesting for: ${Constants.getWhatsappBusinessUri()} as mode is ${viewModel.appModeState.value.toString()}")
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
                 putExtra(DocumentsContract.EXTRA_INITIAL_URI, Constants.getWhatsappBusinessUri())
                 putExtra("android.content.extra.SHOW_ADVANCED", true)
@@ -154,14 +151,14 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         wacheck.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.changeAppMode(AppMode.WHATSAPP)
-                delay(200)
+                delay(100)
                 dialog.dismiss()
             }
         }
         wabcheck.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.changeAppMode(AppMode.WHATSAPP_BUSINESS)
-                delay(200)
+                delay(100)
                 dialog.dismiss()
             }
         }
@@ -175,6 +172,13 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
 
             } else if(requestCode==Constants.WHATSAPP_BUSINESS_REQUEST_CODE) {
                 viewModel.whatsappBusinessPermissionGranted(uri!!)
+            }
+            try {
+                this.contentResolver.takePersistableUriPermission(
+                    uri!!, Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (e: SecurityException) {
+                Log.e("Permissions", "Permission error: ${e.message}")
             }
         }
     }
@@ -194,5 +198,11 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         sheet.findViewById<Button>(R.id.notnow).setOnClickListener {
             dialog.dismiss()
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("aht", "refreshing")
+        viewModel.refreshRepository()
     }
 }

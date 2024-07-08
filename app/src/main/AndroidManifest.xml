@@ -18,11 +18,14 @@
         android:theme="@style/Theme.LiveSaverTheme"
         tools:targetApi="31">
         <activity
+            android:name=".home.presentation.activities.VideoPreviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".home.presentation.activities.ImagePreviewActivity"
             android:exported="false" />
         <activity
             android:name=".home.presentation.activities.HomeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -34,7 +37,7 @@
         </activity>
         <activity
             android:name=".onboarding.presentation.activities.OnBoardingActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>
