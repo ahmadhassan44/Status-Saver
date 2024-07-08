@@ -91,11 +91,4 @@ class ImagesFragment : Fragment() {
         super.onDetach()
         permissionRequester = null
     }
-
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.refreshRepository()
-    }
-
-
 }
