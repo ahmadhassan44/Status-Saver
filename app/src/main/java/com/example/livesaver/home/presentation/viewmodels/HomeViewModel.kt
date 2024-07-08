@@ -1,7 +1,9 @@
 package com.example.livesaver.home.presentation.viewmodels
 
-import android.app.Activity
+import android.content.Context
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore.Audio.Media
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,9 +16,7 @@ import com.example.livesaver.home.domain.MediaModel
 import com.example.livesaver.home.usecases.folderUri.FolderUriUsecases
 import com.example.livesaver.home.usecases.permissions.PermissionsUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,6 +46,9 @@ class HomeViewModel @Inject constructor(
 
     private val _videoStatuses = MutableLiveData<ArrayList<MediaModel>>()
     val videoStatuses: LiveData<ArrayList<MediaModel>> = _videoStatuses
+
+    private val _savedStatuses = MutableLiveData<Map<String,MediaModel>>()
+    val savedStatuses: LiveData<Map<String,MediaModel>> = _savedStatuses
 
 
     init {
@@ -118,11 +121,15 @@ class HomeViewModel @Inject constructor(
             viewModelScope.launch {
                 val statuses =repository.fetchWhatsappStatuses()
                 _imageStatuses.value = ArrayList(statuses.filter { it.mediaType == "image" })
-                Log.d("HomeViewModel", "fetchWhatsappImages: ${repository.whatsappStatuses.value}")
+                Log.d("HomeViewModel", "fetchWhatsappImages: ${repository.allStatuses.value}")
             }
         } else {
             viewModelScope.launch {
-
+                viewModelScope.launch {
+                    val statuses =repository.fetchWhatsappBusinessStatuses()
+                    _imageStatuses.value = ArrayList(statuses.filter { it.mediaType == "image" })
+                    Log.d("HomeViewModel", "fetchWhatsappImages: ${repository.allStatuses.value}")
+                }
             }
         }
     }
@@ -132,19 +139,34 @@ class HomeViewModel @Inject constructor(
                 val statuses =repository.fetchWhatsappStatuses()
                 Log.d("HomeViewModel",statuses.size.toString())
                 _videoStatuses.value = ArrayList(statuses.filter { it.mediaType == "video" })
-                Log.d("HomeViewModel", "fetchWhatsappVideos: ${repository.whatsappStatuses.value}")
+                Log.d("HomeViewModel", "fetchWhatsappVideos: ${repository.allStatuses.value}")
             }
         } else {
             viewModelScope.launch {
-
+                val statuses =repository.fetchWhatsappBusinessStatuses()
+                Log.d("HomeViewModel",statuses.size.toString())
+                _videoStatuses.value = ArrayList(statuses.filter { it.mediaType == "video" })
+                Log.d("HomeViewModel", "fetchWhatsappVideos: ${repository.allStatuses.value}")
             }
         }
     }
 
     fun refreshRepository() {
-        Log.d("aht","referedjed")
         fetchWhatsappImages()
         fetchWhatsappVideos()
+        fetchSavedStatuses()
+    }
+
+     fun saveMedia(uri: String, filename:String) {
+         viewModelScope.launch {
+             repository.saveStatus(uri,filename)
+         }
+    }
+
+    fun fetchSavedStatuses() {
+        viewModelScope.launch {
+            _savedStatuses.value = repository.fetchSavedStatuses()
+        }
     }
 
 }

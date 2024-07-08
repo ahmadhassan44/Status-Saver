@@ -45,20 +45,23 @@ class VideosFragment : Fragment() {
         return videosScreen
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val noPermissionsView = videosScreen.findViewById<View>(R.id.nopermissionsview)
+        swipeToRefreshLayout=videosScreen.findViewById(R.id.videoRefresh)
         lifecycleScope.launch {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) {
                 if (it) {
-                    videosScreen.findViewById<View>(R.id.nopermissionsview).visibility =
+                    noPermissionsView.visibility =
                         View.VISIBLE
-                    videosScreen.findViewById<RecyclerView>(R.id.videosrecview).visibility =
+                    swipeToRefreshLayout.visibility =
                         View.GONE
                 } else {
+                    swipeToRefreshLayout.visibility=View.VISIBLE
                     swipeToRefreshLayout=videosScreen.findViewById(R.id.videoRefresh)
                     swipeToRefreshLayout.setOnRefreshListener {
                         homeViewModel.refreshRepository()
                         swipeToRefreshLayout.isRefreshing=false
                     }
-                    videosScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
+                    noPermissionsView.visibility = View.GONE
                     val recView = videosScreen.findViewById<RecyclerView>(R.id.videosrecview)
                     recView.layoutManager = GridLayoutManager(requireActivity(), 3)
                     val adapter = MediaAdapter(

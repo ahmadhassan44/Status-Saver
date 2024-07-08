@@ -49,23 +49,25 @@ class ImagesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val noPermissionView = imagesScreen.findViewById<View>(R.id.nopermissionsview)
+        swipeToRefreshLayout=imagesScreen.findViewById(R.id.refresh)
         lifecycleScope.launch {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) { noPermission ->
                 Log.d("Permission","permission state:$noPermission")
                 if (noPermission) {
-                    imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility =
+                    noPermissionView.visibility =
                         View.VISIBLE
-                    imagesScreen.findViewById<RecyclerView>(R.id.refresh).visibility =
+                    swipeToRefreshLayout.visibility =
                         View.GONE
                 } else {
+                    noPermissionView.visibility = View.GONE
                     swipeToRefreshLayout=imagesScreen.findViewById(R.id.refresh)
+                    swipeToRefreshLayout.visibility=View.VISIBLE
                     swipeToRefreshLayout.setOnRefreshListener {
                         homeViewModel.refreshRepository()
                         swipeToRefreshLayout.isRefreshing=false
                     }
                     homeViewModel.refreshRepository()
-                    imagesScreen.findViewById<View>(R.id.nopermissionsview).visibility = View.GONE
                     val recView=imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)
                     recView.layoutManager=GridLayoutManager(requireActivity(),3)
                     val adapter=MediaAdapter(

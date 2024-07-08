@@ -41,9 +41,9 @@
             app:srcCompat="@drawable/share_icon" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/saveVideo"
+            android:layout_width="55dp"
+            android:layout_height="37dp"
             android:backgroundTint="#2E3033"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,9 +90,22 @@
             android:layout_height="wrap_content"
             android:text="Download"
             android:textColor="@color/md_theme_background"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton3"
-            app:layout_constraintStart_toStartOf="@+id/imageButton3"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+            app:layout_constraintBottom_toBottomOf="@+id/textView17"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageButton4"
+            app:layout_constraintTop_toBottomOf="@+id/imageButton4" />
+
+        <ImageButton
+            android:id="@+id/savedIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#2E3033"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageButton4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/saved_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton

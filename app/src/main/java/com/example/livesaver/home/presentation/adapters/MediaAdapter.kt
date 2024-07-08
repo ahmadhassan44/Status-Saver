@@ -1,6 +1,7 @@
 package com.example.livesaver.home.presentation.adapters
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.example.livesaver.home.presentation.activities.ImagePreviewActivity
 import com.example.livesaver.home.presentation.activities.VideoPreviewActivity
 
 class MediaAdapter(
-    private val mediaList: ArrayList<MediaModel>
+    private val mediaList: MutableList<MediaModel>
 ): RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
 
@@ -22,6 +23,7 @@ class MediaAdapter(
         private val newLabel=itemView.findViewById<TextView>(R.id.newLabel)
         private val playIcon=itemView.findViewById<ImageView>(R.id.playicon)
         fun bind(mediaModel: MediaModel) {
+            Log.d("SavedFragment","binding")
             Glide.with(itemView.context).load(mediaModel.pathUri).placeholder(R.drawable
                 .baseline_photo_24).into(imageView)
             if(mediaModel.mediaType=="video")
@@ -35,10 +37,14 @@ class MediaAdapter(
                 if(mediaModel.mediaType=="image"){
                     val intent= Intent(itemView.context,ImagePreviewActivity::class.java)
                     intent.putExtra("pathUri",mediaModel.pathUri)
+                    intent.putExtra("fileName",mediaModel.fileName)
+                    intent.putExtra("isDownloaded",mediaModel.isDownloaded)
                     itemView.context.startActivity(intent)
                 } else {
                     val intent= Intent(itemView.context, VideoPreviewActivity::class.java)
                     intent.putExtra("pathUri",mediaModel.pathUri)
+                    intent.putExtra("fileName",mediaModel.fileName)
+                    intent.putExtra("isDownloaded",mediaModel.isDownloaded)
                     itemView.context.startActivity(intent)
                 }
             }
@@ -55,7 +61,7 @@ class MediaAdapter(
         val mediaModel=mediaList[position]
         holder.bind(mediaModel)
     }
-    fun updateList(newMediaList: ArrayList<MediaModel>) {
+    fun updateList(newMediaList: List<MediaModel>) {
         mediaList.clear()
         mediaList.addAll(newMediaList)
         notifyDataSetChanged()
