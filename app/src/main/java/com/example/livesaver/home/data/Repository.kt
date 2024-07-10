@@ -62,7 +62,6 @@ class Repository @Inject constructor(
 
                 while (it.moveToNext()) {
                     val fileName = it.getString(columnDisplayName)
-                    val relativePath = it.getString(columnRelativePath)
                     val id = it.getLong(columnId)
                     val mimeType = it.getString(columnMimeType)
                     val contentUri = ContentUris.withAppendedId(queryUri, id)
