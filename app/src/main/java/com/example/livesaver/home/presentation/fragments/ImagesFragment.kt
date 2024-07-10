@@ -90,7 +90,6 @@ class ImagesFragment : Fragment() {
                 }
             }
         }
-
         imagesScreen.findViewById<Button>(R.id.button).setOnClickListener {
             permissionRequester?.requestStoragePermission()
         }
