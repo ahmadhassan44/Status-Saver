@@ -1,6 +1,7 @@
 package com.example.livesaver.home.presentation.activities
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.provider.DocumentsContract
@@ -58,18 +59,29 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
-                0 -> {
-                    tab.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_settings, null)
-                }
-
-                1 -> tab.text = "Images"
-                2 -> tab.text = "Videos"
-                3 -> tab.text = "Saved"
+                0 -> tab.text = "Images"
+                1 -> tab.text = "Videos"
+                2 -> tab.text = "Saved"
             }
         }.attach()
         viewPager.setCurrentItem(1, false)
-        (toolbar.menu.findItem(R.id.action_whatsapp)).setOnMenuItemClickListener {
+        (toolbar.menu.findItem(R.id.action_filter)).setOnMenuItemClickListener {
             showModeBottomSheet()
+            true
+        }
+        (toolbar.menu.findItem(R.id.action_whatsapp)).setOnMenuItemClickListener {
+            Intent(Intent.ACTION_VIEW).also {
+                it.component= ComponentName("com.whatsapp","com.whatsapp.Main")
+                try {
+                    startActivity(it)
+                } catch (e:Exception){
+                    Log.e("Error",e.message.toString())
+                }
+            }
+            true
+        }
+        (toolbar.menu.findItem(R.id.info)).setOnMenuItemClickListener {
+            startActivity(Intent(this,HowToUseActivity::class.java))
             true
         }
     }

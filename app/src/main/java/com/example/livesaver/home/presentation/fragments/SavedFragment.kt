@@ -1,6 +1,7 @@
 package com.example.livesaver.home.presentation.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.livesaver.R
 import com.example.livesaver.home.domain.MediaModel
+import com.example.livesaver.home.presentation.activities.HowToUseActivity
 import com.example.livesaver.home.presentation.activities.PermissionRequester
 import com.example.livesaver.home.presentation.adapters.MediaAdapter
 import com.example.livesaver.home.presentation.viewmodels.HomeViewModel
@@ -50,6 +52,9 @@ class SavedFragment : Fragment() {
                     swipeRefreshLayout.visibility=View.GONE
                 }
                 else{
+                    savedScreen.findViewById<View>(R.id.nosavedmedia).findViewById<Button>(R.id.howtousebtn).setOnClickListener {
+                        startActivity(Intent(requireContext(), HowToUseActivity::class.java))
+                    }
                     homeViewModel.fetchSavedStatuses()
                     savedScreen.findViewById<View>(R.id.nopermissionsview).visibility=View.GONE
                     swipeRefreshLayout.visibility=View.VISIBLE

@@ -17,6 +17,9 @@
         android:theme="@style/Theme.LiveSaverTheme"
         tools:targetApi="31">
         <activity
+            android:name=".home.presentation.activities.HowToUseActivity"
+            android:exported="false" />
+        <activity
             android:name=".home.presentation.activities.VideoPreviewActivity"
             android:exported="false" />
         <activity

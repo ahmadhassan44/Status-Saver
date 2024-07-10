@@ -25,8 +25,8 @@
         android:visibility="invisible" />
 
     <include
-        android:id="@+id/noImagesView"
-        layout="@layout/no_images_available"
+        android:id="@+id/noVideosView"
+        layout="@layout/no_videos_available"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible" />

@@ -1,6 +1,8 @@
 package com.example.livesaver.home.presentation.fragments
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -46,6 +48,17 @@ class VideosFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val noPermissionsView = videosScreen.findViewById<View>(R.id.nopermissionsview)
+        val novideosView = videosScreen.findViewById<View>(R.id.noVideosView)
+        novideosView.findViewById<Button>(R.id.novideosavailablebtn).setOnClickListener {
+            Intent(Intent.ACTION_VIEW).also {
+                it.component= ComponentName("com.whatsapp","com.whatsapp.Main")
+                try {
+                    startActivity(it)
+                } catch (e:Exception){
+                    Log.e("Error",e.message.toString())
+                }
+            }
+        }
         swipeToRefreshLayout=videosScreen.findViewById(R.id.videoRefresh)
         lifecycleScope.launch {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) {
@@ -72,10 +85,10 @@ class VideosFragment : Fragment() {
                         statuses?.let {
                             adapter.updateList(it)
                             if (it.isEmpty()) {
-                                videosScreen.findViewById<View>(R.id.noImagesView).visibility =
+                                novideosView.visibility =
                                     View.VISIBLE
                             } else {
-                                videosScreen.findViewById<View>(R.id.noImagesView).visibility =
+                                novideosView.visibility =
                                     View.GONE
                             }
                             Log.d("VideosFragment", "Adapter updated with list of size: ${it.size}")
