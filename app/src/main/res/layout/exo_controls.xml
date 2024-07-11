@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.media3.ui.PlayerControlView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Play/Pause button -->
+    <ImageButton
+        android:id="@id/exo_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/exo_controls_play_description" />
+
+    <ImageButton
+        android:id="@id/exo_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/exo_controls_pause_description" />
+
+    <!-- Hide these buttons -->
+    <ImageButton
+        android:id="@id/exo_prev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/exo_controls_previous_description"
+        android:visibility="gone"
+        />
+
+    <ImageButton
+        android:id="@id/exo_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/exo_controls_next_description"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@id/exo_ffwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/exo_controls_fastforward_description"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@id/exo_rew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/exo_controls_rewind_description"
+        android:visibility="gone" />
+
+    <!-- Add other controls as needed -->
+
+</androidx.media3.ui.PlayerControlView>

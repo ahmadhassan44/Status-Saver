@@ -64,7 +64,7 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
                 2 -> tab.text = "Saved"
             }
         }.attach()
-        viewPager.setCurrentItem(1, false)
+        viewPager.setCurrentItem(0, false)
         (toolbar.menu.findItem(R.id.action_filter)).setOnMenuItemClickListener {
             showModeBottomSheet()
             true

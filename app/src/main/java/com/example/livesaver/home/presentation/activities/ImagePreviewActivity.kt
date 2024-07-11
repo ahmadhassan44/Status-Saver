@@ -1,11 +1,14 @@
 package com.example.livesaver.home.presentation.activities
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.livesaver.R
@@ -20,6 +23,8 @@ class ImagePreviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_image_preview)
         val downLoadBtn=findViewById<ImageButton>(R.id.saveImage)
         val savedIcon=findViewById<ImageButton>(R.id.savedIcon2)
+        val sharebtn=findViewById<ImageButton>(R.id.imageshare)
+        val repostbtn=findViewById<ImageButton>(R.id.imagerepost)
         val downldoadText=findViewById<TextView>(R.id.imageDownload)
         if(intent.getBooleanExtra("isDownloaded",false)){
             homeViewModel.saveMedia(intent.getStringExtra("pathUri")!!,intent.getStringExtra("fileName")!!)
@@ -38,6 +43,24 @@ class ImagePreviewActivity : AppCompatActivity() {
             downLoadBtn.isEnabled=false
             savedIcon.visibility=View.VISIBLE
             downldoadText.text="Saved"
+        }
+        sharebtn.setOnClickListener{
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "image/*"
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(intent.getStringExtra("pathUri")))
+            startActivity(Intent.createChooser(shareIntent, "Share Image"))
+        }
+        repostbtn.setOnClickListener{
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "image/*"
+            shareIntent.setPackage("com.whatsapp")
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(intent.getStringExtra("pathUri")))
+            try {
+                startActivity(Intent.createChooser(shareIntent, "Share Image"))
+            } catch (e: ActivityNotFoundException) {
+                // WhatsApp not installed or no activity to handle the intent
+                Toast.makeText(this, "WhatsApp not installed", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -1,23 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_onSurface_highContrast"
-    tools:context=".home.presentation.activities.ImagePreviewActivity">
+    tools:context=".home.presentation.activities.VideoPreviewActivity">
 
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/player"
-        android:layout_width="0dp"
+    <FrameLayout
+        android:id="@+id/video_frame"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9">
 
-    </androidx.media3.ui.PlayerView>
+        <VideoView
+            android:id="@+id/videoview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/play_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_media_play" />
+
+    </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -30,14 +43,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/sharebtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#2E3033"
             app:layout_constraintBottom_toTopOf="@+id/textView17"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintEnd_toStartOf="@+id/repostbtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageButton4"
+            app:layout_constraintTop_toTopOf="@+id/repostbtn"
             app:srcCompat="@drawable/share_icon" />
 
         <ImageButton
@@ -45,15 +58,15 @@
             android:layout_width="55dp"
             android:layout_height="37dp"
             android:backgroundTint="#2E3033"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
+            app:layout_constraintBottom_toBottomOf="@+id/repostbtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton4"
-            app:layout_constraintTop_toTopOf="@+id/imageButton4"
+            app:layout_constraintStart_toEndOf="@+id/repostbtn"
+            app:layout_constraintTop_toTopOf="@+id/repostbtn"
             app:layout_constraintVertical_bias="0.31"
             app:srcCompat="@drawable/download_icon" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/repostbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#2E3033"
@@ -70,9 +83,9 @@
             android:layout_height="wrap_content"
             android:text="Share"
             android:textColor="@color/md_theme_background"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton2"
-            app:layout_constraintStart_toStartOf="@+id/imageButton2"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+            app:layout_constraintEnd_toEndOf="@+id/sharebtn"
+            app:layout_constraintStart_toStartOf="@+id/sharebtn"
+            app:layout_constraintTop_toBottomOf="@+id/sharebtn" />
 
         <TextView
             android:id="@+id/textView17"
@@ -80,9 +93,9 @@
             android:layout_height="wrap_content"
             android:text="Repost"
             android:textColor="@color/md_theme_background"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton4"
-            app:layout_constraintStart_toStartOf="@+id/imageButton4"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton4" />
+            app:layout_constraintEnd_toEndOf="@+id/repostbtn"
+            app:layout_constraintStart_toStartOf="@+id/repostbtn"
+            app:layout_constraintTop_toBottomOf="@+id/repostbtn" />
 
         <TextView
             android:id="@+id/textView18"
@@ -92,8 +105,8 @@
             android:textColor="@color/md_theme_background"
             app:layout_constraintBottom_toBottomOf="@+id/textView17"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton4"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton4" />
+            app:layout_constraintStart_toEndOf="@+id/repostbtn"
+            app:layout_constraintTop_toBottomOf="@+id/repostbtn" />
 
         <ImageButton
             android:id="@+id/savedIcon"
@@ -101,9 +114,9 @@
             android:layout_height="wrap_content"
             android:background="#2E3033"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
+            app:layout_constraintBottom_toBottomOf="@+id/repostbtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton4"
+            app:layout_constraintStart_toEndOf="@+id/repostbtn"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/saved_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>

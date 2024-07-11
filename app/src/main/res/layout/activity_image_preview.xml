@@ -19,14 +19,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/imageshare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#2E3033"
-            app:layout_constraintBottom_toTopOf="@+id/textView17"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintBottom_toBottomOf="@+id/imagerepost"
+            app:layout_constraintEnd_toStartOf="@+id/imagerepost"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageButton4"
+            app:layout_constraintTop_toTopOf="@+id/imagerepost"
             app:srcCompat="@drawable/share_icon" />
 
         <ImageButton
@@ -34,15 +34,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#2E3033"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
+            app:layout_constraintBottom_toBottomOf="@+id/repostbtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton4"
-            app:layout_constraintTop_toTopOf="@+id/imageButton4"
+            app:layout_constraintStart_toEndOf="@+id/imagerepost"
+            app:layout_constraintTop_toTopOf="@+id/imagerepost"
             app:layout_constraintVertical_bias="0.31"
             app:srcCompat="@drawable/download_icon" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/imagerepost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#2E3033"
@@ -54,35 +54,15 @@
             app:srcCompat="@drawable/repost_icon" />
 
         <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Share"
-            android:textColor="@color/md_theme_background"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton2"
-            app:layout_constraintStart_toStartOf="@+id/imageButton2"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Repost"
-            android:textColor="@color/md_theme_background"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton4"
-            app:layout_constraintStart_toStartOf="@+id/imageButton4"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton4" />
-
-        <TextView
             android:id="@+id/imageDownload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Download"
             android:textColor="@color/md_theme_background"
-            app:layout_constraintBottom_toBottomOf="@+id/textView17"
+            app:layout_constraintBottom_toBottomOf="@+id/textView22"
             app:layout_constraintEnd_toEndOf="@+id/saveImage"
             app:layout_constraintStart_toStartOf="@+id/saveImage"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton4" />
+            app:layout_constraintTop_toBottomOf="@+id/imagerepost" />
 
         <ImageButton
             android:id="@+id/savedIcon2"
@@ -90,11 +70,31 @@
             android:layout_height="wrap_content"
             android:background="#2E3033"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
+            app:layout_constraintBottom_toBottomOf="@+id/imagerepost"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton4"
-            app:layout_constraintTop_toTopOf="@+id/imageButton4"
+            app:layout_constraintStart_toEndOf="@+id/imagerepost"
+            app:layout_constraintTop_toTopOf="@+id/imagerepost"
             app:srcCompat="@drawable/saved_icon" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share"
+            android:textColor="@color/md_theme_background"
+            app:layout_constraintEnd_toEndOf="@+id/imageshare"
+            app:layout_constraintStart_toStartOf="@+id/imageshare"
+            app:layout_constraintTop_toBottomOf="@+id/imageshare" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Repost"
+            android:textColor="@color/md_theme_background"
+            app:layout_constraintEnd_toEndOf="@+id/imagerepost"
+            app:layout_constraintStart_toStartOf="@+id/imagerepost"
+            app:layout_constraintTop_toBottomOf="@+id/imagerepost" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
