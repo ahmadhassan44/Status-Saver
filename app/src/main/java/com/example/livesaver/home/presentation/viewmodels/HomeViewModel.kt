@@ -85,9 +85,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             appModeUsecases.changeAppMode.invoke(newMode)
             determineAppUiBasedOnModeAndPermission()
+            refreshRepository()
         }
     }
-
     fun whatsappPermissionGranted(uri: Uri) {
         viewModelScope.launch {
             permissionUsecases.whatsAppPermissionGranted.invoke()
@@ -95,7 +95,6 @@ class HomeViewModel @Inject constructor(
             folderUriUsecases.whatsappFolderUri.invoke(uri)
         }
     }
-
     fun whatsappBusinessPermissionGranted(uri: Uri) {
         viewModelScope.launch {
             permissionUsecases.whatsAppBusinessPermissionGranted.invoke()
@@ -103,7 +102,6 @@ class HomeViewModel @Inject constructor(
             folderUriUsecases.whatsappBusinessUri.invoke(uri)
         }
     }
-
     fun determineAppUiBasedOnModeAndPermission() {
         if (_appModeState.value == AppMode.WHATSAPP) {
             viewModelScope.launch {
