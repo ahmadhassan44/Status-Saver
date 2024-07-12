@@ -55,7 +55,6 @@ class SavedFragment : Fragment() {
                     savedScreen.findViewById<View>(R.id.nosavedmedia).findViewById<Button>(R.id.howtousebtn).setOnClickListener {
                         startActivity(Intent(requireContext(), HowToUseActivity::class.java))
                     }
-                    homeViewModel.fetchSavedStatuses()
                     savedScreen.findViewById<View>(R.id.nopermissionsview).visibility=View.GONE
                     swipeRefreshLayout.visibility=View.VISIBLE
                     val adapter= MediaAdapter(ArrayList<MediaModel>())

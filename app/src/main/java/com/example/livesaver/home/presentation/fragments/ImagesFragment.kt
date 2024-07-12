@@ -40,7 +40,6 @@ class ImagesFragment : Fragment() {
             throw RuntimeException("$context must implement PermissionRequester")
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,16 +52,6 @@ class ImagesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val noPermissionView = imagesScreen.findViewById<View>(R.id.nopermissionsview)
         val noImagesView = imagesScreen.findViewById<View>(R.id.noImagesView)
-        noImagesView.findViewById<Button>(R.id.howtousebtn).setOnClickListener {
-            Intent(Intent.ACTION_VIEW).also {
-                it.component= ComponentName("com.whatsapp","com.whatsapp.Main")
-                try {
-                    startActivity(it)
-                } catch (e:Exception){
-                    Log.e("Error",e.message.toString())
-                }
-            }
-        }
         swipeToRefreshLayout=imagesScreen.findViewById(R.id.refresh)
         lifecycleScope.launch {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) { noPermission ->
@@ -80,6 +69,16 @@ class ImagesFragment : Fragment() {
         imagesScreen.findViewById<Button>(R.id.button).setOnClickListener {
             permissionRequester?.requestStoragePermission()
         }
+        noImagesView.findViewById<Button>(R.id.howtousebtn).setOnClickListener {
+            Intent(Intent.ACTION_VIEW).also {
+                it.component= ComponentName("com.whatsapp","com.whatsapp.Main")
+                try {
+                    startActivity(it)
+                } catch (e:Exception){
+                    Log.e("Error",e.message.toString())
+                }
+            }
+        }
     }
 
     private fun setUpRecyclerView(noPermissionView: View) {
@@ -90,7 +89,6 @@ class ImagesFragment : Fragment() {
             homeViewModel.refreshRepository()
             swipeToRefreshLayout.isRefreshing = false
         }
-        homeViewModel.refreshRepository()
         val recView = imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)
         recView.layoutManager = GridLayoutManager(requireActivity(), 3)
         val adapter = MediaAdapter(
@@ -110,7 +108,6 @@ class ImagesFragment : Fragment() {
         })
         recView.adapter = adapter
     }
-
     override fun onDetach() {
         super.onDetach()
         permissionRequester = null

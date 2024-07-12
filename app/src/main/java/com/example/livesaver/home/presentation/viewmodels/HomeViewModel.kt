@@ -16,7 +16,9 @@ import com.example.livesaver.home.domain.MediaModel
 import com.example.livesaver.home.usecases.folderUri.FolderUriUsecases
 import com.example.livesaver.home.usecases.permissions.PermissionsUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -62,8 +64,7 @@ class HomeViewModel @Inject constructor(
             }
         }
         determineAppUiBasedOnModeAndPermission()
-        fetchWhatsappImages()
-        fetchWhatsappVideos()
+        refreshRepository()
     }
 
     fun onCheckbox1Toggled(isChecked: Boolean) {
@@ -119,16 +120,18 @@ class HomeViewModel @Inject constructor(
     fun fetchWhatsappImages() {
         if (appModeState.value == AppMode.WHATSAPP) {
             viewModelScope.launch {
-                val statuses =repository.fetchWhatsappStatuses()
-                _imageStatuses.value = ArrayList(statuses.filter { it.mediaType == "image" })
-                Log.d("HomeViewModel", "fetchWhatsappImages: ${repository.allStatuses.value}")
+                withContext(Dispatchers.IO) {
+                    val statuses =repository.fetchWhatsappStatuses()
+                    val filtered=ArrayList(statuses.filter { it.mediaType == "image" })
+                    _imageStatuses.postValue(filtered)
+                }
             }
         } else {
             viewModelScope.launch {
-                viewModelScope.launch {
+                withContext(Dispatchers.IO){
                     val statuses =repository.fetchWhatsappBusinessStatuses()
-                    _imageStatuses.value = ArrayList(statuses.filter { it.mediaType == "image" })
-                    Log.d("HomeViewModel", "fetchWhatsappImages: ${repository.allStatuses.value}")
+                    val filtered=ArrayList(statuses.filter { it.mediaType == "image" })
+                    _imageStatuses.postValue(filtered)
                 }
             }
         }
@@ -136,17 +139,19 @@ class HomeViewModel @Inject constructor(
     fun fetchWhatsappVideos(){
         if (appModeState.value == AppMode.WHATSAPP) {
             viewModelScope.launch {
-                val statuses =repository.fetchWhatsappStatuses()
-                Log.d("HomeViewModel",statuses.size.toString())
-                _videoStatuses.value = ArrayList(statuses.filter { it.mediaType == "video" })
-                Log.d("HomeViewModel", "fetchWhatsappVideos: ${repository.allStatuses.value}")
+                withContext(Dispatchers.IO){
+                    val statuses =repository.fetchWhatsappStatuses()
+                    val filtered=ArrayList(statuses.filter { it.mediaType == "video" })
+                    _videoStatuses.postValue(filtered)
+                }
             }
         } else {
             viewModelScope.launch {
-                val statuses =repository.fetchWhatsappBusinessStatuses()
-                Log.d("HomeViewModel",statuses.size.toString())
-                _videoStatuses.value = ArrayList(statuses.filter { it.mediaType == "video" })
-                Log.d("HomeViewModel", "fetchWhatsappVideos: ${repository.allStatuses.value}")
+                withContext(Dispatchers.IO){
+                    val statuses =repository.fetchWhatsappBusinessStatuses()
+                    val filtered=ArrayList(statuses.filter { it.mediaType == "video" })
+                    _videoStatuses.postValue(filtered)
+                }
             }
         }
     }
@@ -165,8 +170,10 @@ class HomeViewModel @Inject constructor(
 
     fun fetchSavedStatuses() {
         viewModelScope.launch {
-            _savedStatuses.value = repository.fetchSavedStatuses()
+            withContext(Dispatchers.IO){
+                val fetchSavedStatuses = repository.fetchSavedStatuses()
+                _savedStatuses.postValue(fetchSavedStatuses)
+            }
         }
     }
-
 }
