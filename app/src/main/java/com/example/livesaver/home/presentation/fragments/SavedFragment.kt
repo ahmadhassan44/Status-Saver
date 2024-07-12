@@ -70,11 +70,11 @@ class SavedFragment : Fragment() {
                             Log.d("SavedFragment", "Adapter updated with list of size: ${it.size}")
                             if(list.isEmpty()){
                                 savedScreen.findViewById<View>(R.id.nosavedmedia).visibility=View.VISIBLE
-                                swipeRefreshLayout.visibility=View.GONE
+                                savedRecView.visibility=View.GONE
                             }
                             else{
                                 savedScreen.findViewById<View>(R.id.nosavedmedia).visibility=View.GONE
-                                swipeRefreshLayout.visibility=View.VISIBLE
+                                savedRecView.visibility=View.VISIBLE
                             }
                         }
                     }

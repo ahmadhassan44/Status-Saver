@@ -39,6 +39,7 @@ class VideoPreviewActivity : AppCompatActivity() {
             homeViewModel.saveMedia(intent.getStringExtra("pathUri")!!,intent.getStringExtra("fileName")!!)
             downLoadBtn.visibility=View.GONE
             downLoadBtn.isEnabled=false
+            downLoadBtn.isClickable=false
             savedIcon.visibility=View.VISIBLE
             downldoadText.text="Saved"
         }
@@ -67,6 +68,7 @@ class VideoPreviewActivity : AppCompatActivity() {
             homeViewModel.saveMedia(intent.getStringExtra("pathUri")!!,intent.getStringExtra("fileName")!!)
             downLoadBtn.visibility=View.GONE
             downLoadBtn.isEnabled=false
+            downLoadBtn.isClickable=false
             savedIcon.visibility=View.VISIBLE
             downldoadText.text="Saved"
         }
