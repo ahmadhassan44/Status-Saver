@@ -214,7 +214,7 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
     }
 
     override fun onResume() {
-        super.onRestart()
+        super.onResume()
         viewModel.refreshRepository()
     }
 }
