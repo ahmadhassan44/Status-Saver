@@ -41,7 +41,7 @@ class VideosFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         videosScreen=inflater.inflate(R.layout.fragment_videos, container, false)
         return videosScreen

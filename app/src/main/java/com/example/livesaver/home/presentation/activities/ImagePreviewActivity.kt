@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -22,12 +23,11 @@ class ImagePreviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_preview)
         val downLoadBtn=findViewById<ImageButton>(R.id.saveImage)
-        val savedIcon=findViewById<ImageButton>(R.id.savedIcon2)
+        val savedIcon=findViewById<ImageButton>(R.id.savedimageicon)
         val sharebtn=findViewById<ImageButton>(R.id.imageshare)
         val repostbtn=findViewById<ImageButton>(R.id.imagerepost)
         val downldoadText=findViewById<TextView>(R.id.imageDownload)
         if(intent.getBooleanExtra("isDownloaded",false)){
-            homeViewModel.saveMedia(intent.getStringExtra("pathUri")!!,intent.getStringExtra("fileName")!!)
             downLoadBtn.visibility=View.GONE
             downLoadBtn.isEnabled=false
             downLoadBtn.isClickable=false
@@ -45,6 +45,7 @@ class ImagePreviewActivity : AppCompatActivity() {
             downLoadBtn.isClickable=false
             savedIcon.visibility=View.VISIBLE
             downldoadText.text="Saved"
+            Log.d("savingfix","clicked")
         }
         sharebtn.setOnClickListener{
             val shareIntent = Intent(Intent.ACTION_SEND)
@@ -63,6 +64,9 @@ class ImagePreviewActivity : AppCompatActivity() {
                 // WhatsApp not installed or no activity to handle the intent
                 Toast.makeText(this, "WhatsApp not installed", Toast.LENGTH_SHORT).show()
             }
+        }
+        savedIcon.setOnClickListener {
+            Toast.makeText(this,"Already Saved!",Toast.LENGTH_SHORT).show()
         }
     }
 }

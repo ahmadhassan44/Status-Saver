@@ -93,6 +93,7 @@ class HomeViewModel @Inject constructor(
             permissionUsecases.whatsAppPermissionGranted.invoke()
             determineAppUiBasedOnModeAndPermission()
             folderUriUsecases.whatsappFolderUri.invoke(uri)
+            refreshRepository()
         }
     }
     fun whatsappBusinessPermissionGranted(uri: Uri) {
@@ -100,6 +101,7 @@ class HomeViewModel @Inject constructor(
             permissionUsecases.whatsAppBusinessPermissionGranted.invoke()
             determineAppUiBasedOnModeAndPermission()
             folderUriUsecases.whatsappBusinessUri.invoke(uri)
+            refreshRepository()
         }
     }
     fun determineAppUiBasedOnModeAndPermission() {

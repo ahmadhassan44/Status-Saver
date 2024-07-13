@@ -194,6 +194,7 @@ class Repository @Inject constructor(
         return fileName.substringAfterLast(".")
     }
     suspend fun saveStatus(uriString: String, fileName: String) {
+        Log.d("savingfix","calledagain")
         withContext(Dispatchers.IO) {
             val directoryName = "Status Saver"
             val inputUri = Uri.parse(uriString)
