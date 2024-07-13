@@ -78,5 +78,10 @@ class ImagePreviewActivity : AppCompatActivity() {
         savedIcon.setOnClickListener {
             Toast.makeText(this,"Already Saved!",Toast.LENGTH_SHORT).show()
         }
+        deleteButton.setOnClickListener {
+            homeViewModel.deleteSavedMedia(this,Uri.parse(intent.getStringExtra("pathUri")),
+                intent.getStringExtra("fileName")!!)
+            finish()
+        }
     }
 }

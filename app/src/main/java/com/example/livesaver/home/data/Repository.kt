@@ -196,11 +196,9 @@ class Repository @Inject constructor(
         return fileName.substringAfterLast(".")
     }
     suspend fun saveStatus(uriString: String, fileName: String) {
-        Log.d("savingfix","calledagain")
         withContext(Dispatchers.IO) {
             val directoryName = "Status Saver"
             val inputUri = Uri.parse(uriString)
-
             try {
                 val outputStream: OutputStream? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     // Android 10 and above (scoped storage)
@@ -259,5 +257,40 @@ class Repository @Inject constructor(
 
         // Convert the File object to a URI using Uri.fromFile
         return Uri.fromFile(subdirectory)
+    }
+    suspend fun deleteSavedStatus(context:Context,uri:Uri,fileName: String) :Boolean{
+        withContext(Dispatchers.IO){
+            return@withContext try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    // Android 10 and above (scoped storage)
+                    val contentUri = uri
+                    val resolver = context.contentResolver
+                    val rowsDeleted = resolver.delete(contentUri, null, null)
+                    if (rowsDeleted > 0) {
+                        Log.d("DeleteMedia", "Media deleted successfully")
+                        true
+                    } else {
+                        Log.e("DeleteMedia", "Error deleting media")
+                        false
+                    }
+                } else {
+                    // Android 9 and below (direct file access)
+                    val downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    val directory = File(downloadsDirectory, "Status Saver")
+                    val file = File(directory,fileName)
+                    if (file.exists() && file.delete()) {
+                        Log.d("DeleteMedia", "Media deleted successfully: $fileName")
+                        true
+                    } else {
+                        Log.e("DeleteMedia", "Error deleting media: $fileName")
+                        false
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("DeleteMedia", "Exception deleting media: ${e.message}")
+                false
+            }
+        }
+        return false
     }
 }
