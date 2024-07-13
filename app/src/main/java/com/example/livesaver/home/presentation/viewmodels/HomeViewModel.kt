@@ -115,6 +115,16 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+        } else {
+            viewModelScope.launch {
+                permissionUsecases.readWhatappBusinessPermission.invoke().collect {
+                    if (it) {
+                        _noPermissionState.value = false
+                    } else {
+                        _noPermissionState.value = true
+                    }   
+                }
+            }
         }
     }
     fun fetchWhatsappImages() {
