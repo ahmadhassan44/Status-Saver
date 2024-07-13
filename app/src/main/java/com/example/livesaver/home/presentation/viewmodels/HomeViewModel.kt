@@ -186,4 +186,9 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+    fun deleteSavedMedia(context: Context,uri: Uri,filename: String){
+        viewModelScope.launch {
+            repository.deleteSavedStatus(context,uri,filename)
+        }
+    }
 }
