@@ -30,12 +30,21 @@ class VideoPreviewActivity : AppCompatActivity() {
         val repostbtn=findViewById<ImageButton>(R.id.repostbtn)
         val savedIcon=findViewById<ImageButton>(R.id.savedvideoicon)
         val downldoadText=findViewById<TextView>(R.id.textView18)
+        val deleteVideo=findViewById<ImageButton>(R.id.deletevideo)
         if(intent.getBooleanExtra("isDownloaded",false)){
             downLoadBtn.visibility=View.GONE
             downLoadBtn.isEnabled=false
             downLoadBtn.isClickable=false
             savedIcon.visibility=View.VISIBLE
             downldoadText.text="Saved"
+        }
+        if(intent.getBooleanExtra("permanentlySaved",false)){
+            downLoadBtn.visibility=View.GONE
+            downLoadBtn.isEnabled=false
+            downLoadBtn.isClickable=false
+            savedIcon.visibility=View.GONE
+            downldoadText.text="Delete"
+            deleteVideo.visibility=View.VISIBLE
         }
         val pathUri = intent.getStringExtra("pathUri")
         if (pathUri != null) {

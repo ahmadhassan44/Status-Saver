@@ -2,6 +2,7 @@ package com.example.livesaver.home.presentation.activities
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -27,12 +28,21 @@ class ImagePreviewActivity : AppCompatActivity() {
         val sharebtn=findViewById<ImageButton>(R.id.imageshare)
         val repostbtn=findViewById<ImageButton>(R.id.imagerepost)
         val downldoadText=findViewById<TextView>(R.id.imageDownload)
+        val deleteButton=findViewById<ImageButton>(R.id.deleteimage)
         if(intent.getBooleanExtra("isDownloaded",false)){
             downLoadBtn.visibility=View.GONE
             downLoadBtn.isEnabled=false
             downLoadBtn.isClickable=false
             savedIcon.visibility=View.VISIBLE
             downldoadText.text="Saved"
+        }
+        if(intent.getBooleanExtra("permanentlySaved",false)){
+            downLoadBtn.visibility=View.GONE
+            downLoadBtn.isEnabled=false
+            downLoadBtn.isClickable=false
+            savedIcon.visibility=View.GONE
+            deleteButton.visibility=View.VISIBLE
+            downldoadText.text="Delete"
         }
         findViewById<ImageView>(R.id.imageView5).setImageURI(Uri.parse(intent.getStringExtra("pathUri")))
         findViewById<ImageButton>(R.id.imageButton).setOnClickListener {

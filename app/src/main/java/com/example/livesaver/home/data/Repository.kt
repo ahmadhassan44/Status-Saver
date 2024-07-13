@@ -71,7 +71,8 @@ class Repository @Inject constructor(
                         pathUri = contentUri.toString(),
                         fileName = fileName,
                         mediaType = mediaType,
-                        isDownloaded = true
+                        isDownloaded = true,
+                        permanentlySaved = true
                     )
                     Log.d("Saved", savedFilesMap[fileName].toString())
                 }
@@ -87,7 +88,8 @@ class Repository @Inject constructor(
                         pathUri = file.absolutePath,
                         fileName = file.name,
                         mediaType = mediaType,
-                        isDownloaded = true
+                        isDownloaded = true,
+                        permanentlySaved = true
                     )
                     Log.d("Saved", savedFilesMap[file.name].toString())
                 }

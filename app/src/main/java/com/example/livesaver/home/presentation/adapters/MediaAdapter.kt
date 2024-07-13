@@ -39,12 +39,14 @@ class MediaAdapter(
                     intent.putExtra("pathUri",mediaModel.pathUri)
                     intent.putExtra("fileName",mediaModel.fileName)
                     intent.putExtra("isDownloaded",mediaModel.isDownloaded)
+                    intent.putExtra("permanentlySaved",mediaModel.permanentlySaved)
                     itemView.context.startActivity(intent)
                 } else {
                     val intent= Intent(itemView.context, VideoPreviewActivity::class.java)
                     intent.putExtra("pathUri",mediaModel.pathUri)
                     intent.putExtra("fileName",mediaModel.fileName)
                     intent.putExtra("isDownloaded",mediaModel.isDownloaded)
+                    intent.putExtra("permanentlySaved",mediaModel.permanentlySaved)
                     itemView.context.startActivity(intent)
                 }
             }
