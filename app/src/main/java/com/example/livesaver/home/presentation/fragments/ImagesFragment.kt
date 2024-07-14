@@ -52,17 +52,20 @@ class ImagesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val noPermissionView = imagesScreen.findViewById<View>(R.id.nopermissionsview)
         val noImagesView = imagesScreen.findViewById<View>(R.id.noImagesView)
+        val recView = imagesScreen.findViewById<RecyclerView>(R.id.imagesrecview)
         swipeToRefreshLayout=imagesScreen.findViewById(R.id.refresh)
         lifecycleScope.launch {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) { noPermission ->
                 Log.d("Permission","permission state:$noPermission")
                 if (noPermission) {
-                    noPermissionView.visibility =
-                        View.VISIBLE
-                    swipeToRefreshLayout.visibility =
-                        View.GONE
+                    noPermissionView.visibility = View.VISIBLE
+                    noImagesView.visibility=View.GONE
+                    recView.visibility=View.GONE
+                    Log.d("Permission","no permission")
                 } else {
+                    noPermissionView.visibility=View.GONE
                     setUpRecyclerView(noPermissionView)
+                    Log.d("Permission","setup recyclerview")
                 }
             }
         }
@@ -84,7 +87,6 @@ class ImagesFragment : Fragment() {
     private fun setUpRecyclerView(noPermissionView: View) {
         noPermissionView.visibility = View.GONE
         swipeToRefreshLayout = imagesScreen.findViewById(R.id.refresh)
-        swipeToRefreshLayout.visibility = View.VISIBLE
         swipeToRefreshLayout.setOnRefreshListener {
             homeViewModel.refreshRepository()
             swipeToRefreshLayout.isRefreshing = false
@@ -96,14 +98,14 @@ class ImagesFragment : Fragment() {
         )
         homeViewModel.imageStatuses.observe(viewLifecycleOwner, Observer { statuses ->
             statuses?.let {
-                Log.d("Permission", "Updating adapter with list of size: ${it.size}")
                 adapter.updateList(it)
                 if (it.isEmpty()) {
                     imagesScreen.findViewById<View>(R.id.noImagesView).visibility = View.VISIBLE
+                    recView.visibility=View.GONE
                 } else {
                     imagesScreen.findViewById<View>(R.id.noImagesView).visibility = View.GONE
+                    recView.visibility=View.VISIBLE
                 }
-                Log.d("ImagesFragment", "Adapter updated with list of size: ${it.size}")
             }
         })
         recView.adapter = adapter
