@@ -11,7 +11,7 @@
         android:layout_height="73dp"
         android:elevation="0dp"
         app:cardBackgroundColor="#F6F6F6"
-        app:cardCornerRadius="24dp"
+        app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

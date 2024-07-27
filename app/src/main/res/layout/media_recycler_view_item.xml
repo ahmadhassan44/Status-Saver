@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="32dp">
+        app:cardCornerRadius="4dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:visibility="gone"
-                app:srcCompat="@drawable/baseline_play_circle_outline_24" />
+                app:srcCompat="@drawable/new_play_btn" />
 
             <!-- New Label (assuming this should also be centered) -->
             <TextView
@@ -43,8 +43,12 @@
                 android:layout_marginTop="4dp"
                 android:background="@drawable/new_label_bg"
                 android:padding="4dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:text="NEW"
                 android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
                 android:visibility="visible" />
 
         </FrameLayout>
