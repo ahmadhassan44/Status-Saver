@@ -72,4 +72,6 @@ dependencies {
     implementation(libs.androidx.media3.ui)
     //Refresh
     implementation(libs.androidx.swiperefreshlayout)
+    //splash
+    implementation(libs.core.splashscreen)
 }

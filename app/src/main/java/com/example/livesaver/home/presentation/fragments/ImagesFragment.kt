@@ -56,7 +56,7 @@ class ImagesFragment : Fragment() {
         swipeToRefreshLayout=imagesScreen.findViewById(R.id.refresh)
         lifecycleScope.launch {
             homeViewModel.noPermissionState.observe(viewLifecycleOwner) { noPermission ->
-                Log.d("Permission","permission state:$noPermission")
+                Log.d("Permission"," no permission state:$noPermission")
                 if (noPermission) {
                     noPermissionView.visibility = View.VISIBLE
                     noImagesView.visibility=View.GONE
@@ -83,7 +83,6 @@ class ImagesFragment : Fragment() {
             }
         }
     }
-
     private fun setUpRecyclerView(noPermissionView: View) {
         noPermissionView.visibility = View.GONE
         swipeToRefreshLayout = imagesScreen.findViewById(R.id.refresh)

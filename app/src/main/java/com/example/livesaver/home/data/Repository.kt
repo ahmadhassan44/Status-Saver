@@ -95,11 +95,9 @@ class Repository @Inject constructor(
                 }
             }
         }
-
         savedStatuses.postValue(savedFilesMap as HashMap<String, MediaModel>?)
         return savedFilesMap
     }
-
     suspend fun fetchWhatsappStatuses(): ArrayList<MediaModel> {
         try {
             val folderUriString = localUserManager.readwhatsappfolderuri().first()

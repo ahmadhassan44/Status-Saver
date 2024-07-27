@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/md_theme_primary" />
+    <item>
+        <inset
+            android:drawable="@drawable/spalsh_icon"
+            android:inset="20%"> <!-- Adjust this percentage to change the size -->
+        </inset>
+    </item>
+</layer-list>

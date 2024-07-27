@@ -109,9 +109,9 @@ class HomeViewModel @Inject constructor(
             viewModelScope.launch {
                 permissionUsecases.readWhatappPermission.invoke().collect {
                     if (it) {
-                        _noPermissionState.value = false
+                        _noPermissionState.postValue(false)
                     } else {
-                        _noPermissionState.value = true
+                        _noPermissionState.postValue(true)
                     }
                 }
             }
@@ -119,9 +119,9 @@ class HomeViewModel @Inject constructor(
             viewModelScope.launch {
                 permissionUsecases.readWhatappBusinessPermission.invoke().collect {
                     if (it) {
-                        _noPermissionState.value = false
+                        _noPermissionState.postValue(false)
                     } else {
-                        _noPermissionState.value = true
+                        _noPermissionState.postValue(true)
                     }   
                 }
             }
