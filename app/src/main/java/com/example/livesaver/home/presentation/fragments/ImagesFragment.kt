@@ -59,7 +59,6 @@ class ImagesFragment : Fragment() {
                 Log.d("Permission"," no permission state:$noPermission")
                 if (noPermission) {
                     noPermissionView.visibility = View.VISIBLE
-                    noImagesView.visibility=View.GONE
                     recView.visibility=View.GONE
                     Log.d("Permission","no permission")
                 } else {

@@ -52,7 +52,6 @@ class HomeViewModel @Inject constructor(
     private val _savedStatuses = MutableLiveData<Map<String,MediaModel>>()
     val savedStatuses: LiveData<Map<String,MediaModel>> = _savedStatuses
 
-
     init {
         _isChecked1.value = false
         _isChecked2.value = false
@@ -85,7 +84,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             appModeUsecases.changeAppMode.invoke(newMode)
             determineAppUiBasedOnModeAndPermission()
-            refreshRepository()
+//            refreshRepository()
         }
     }
     fun whatsappPermissionGranted(uri: Uri) {
@@ -110,6 +109,7 @@ class HomeViewModel @Inject constructor(
                 permissionUsecases.readWhatappPermission.invoke().collect {
                     if (it) {
                         _noPermissionState.postValue(false)
+                        refreshRepository()
                     } else {
                         _noPermissionState.postValue(true)
                     }
@@ -120,6 +120,7 @@ class HomeViewModel @Inject constructor(
                 permissionUsecases.readWhatappBusinessPermission.invoke().collect {
                     if (it) {
                         _noPermissionState.postValue(false)
+                        refreshRepository()
                     } else {
                         _noPermissionState.postValue(true)
                     }   
