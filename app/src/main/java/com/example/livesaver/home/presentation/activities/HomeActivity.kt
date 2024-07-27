@@ -3,21 +3,18 @@ package com.example.livesaver.home.presentation.activities
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageButton
-import android.widget.RadioButton
-import android.widget.Toolbar
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
@@ -33,7 +30,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.w3c.dom.Document
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(),PermissionRequester {
@@ -149,26 +145,36 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         val dialog=BottomSheetDialog(this)
         dialog.setContentView(sheet)
         dialog.show()
-        val wacheck=sheet.findViewById<RadioButton>(R.id.wa)
-        val wabcheck=sheet.findViewById<RadioButton>(R.id.wab)
+        val wamode=dialog.findViewById<ConstraintLayout>(R.id.wamode)
+        val wabmode=dialog.findViewById<ConstraintLayout>(R.id.wabmode)
+        val watick=dialog.findViewById<ImageView>(R.id.tick1)
+        val wabtick=dialog.findViewById<ImageView>(R.id.tick2)
         viewModel.appModeState.observe(this) {
             when (it) {
                 AppMode.WHATSAPP -> {
-                    wacheck.isChecked = true
+                    wamode?.setBackgroundColor(Color.parseColor("#C7F2E8"))
+                    watick?.visibility=View.VISIBLE
+
+                    wabmode?.setBackgroundColor(Color.TRANSPARENT)
+                    wabtick?.visibility=View.INVISIBLE
                 }
                 AppMode.WHATSAPP_BUSINESS -> {
-                    wabcheck.isChecked = true
+                    wabtick?.visibility=View.VISIBLE
+                    wabmode?.setBackgroundColor(Color.parseColor("#C7F2E8"))
+
+                    wamode?.setBackgroundColor(Color.TRANSPARENT)
+                    watick?.visibility=View.INVISIBLE
                 }
             }
         }
-        wacheck.setOnClickListener {
+        wamode?.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.changeAppMode(AppMode.WHATSAPP)
                 delay(100)
                 dialog.dismiss()
             }
         }
-        wabcheck.setOnClickListener {
+        wabmode?.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.changeAppMode(AppMode.WHATSAPP_BUSINESS)
                 delay(100)
