@@ -85,7 +85,6 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         val sheet = layoutInflater.inflate(R.layout.permissions_bottomsheet, null)
         val allowBtn=sheet.findViewById<Button>(R.id.allow)
         val storageCheckBox=sheet.findViewById<CheckBox>(R.id.storage)
-        val notificationCheckBox=sheet.findViewById<CheckBox>(R.id.notifications)
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(sheet)
         dialog.show()
@@ -96,29 +95,17 @@ class HomeActivity : AppCompatActivity(),PermissionRequester {
         storageCheckBox.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onCheckbox1Toggled(isChecked)
         }
-        notificationCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onCheckbox2Toggled(isChecked)
-        }
         viewModel.isChecked1.observe(this) { isChecked ->
             storageCheckBox.isChecked = isChecked
         }
-        viewModel.isChecked2.observe(this, Observer { isChecked ->
-            notificationCheckBox.isChecked = isChecked
-        })
         viewModel.isVisable.observe(this, Observer { isVisible ->
             allowBtn.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
         })
         allowBtn.setOnClickListener {
             val storageChecked = storageCheckBox.isChecked
-            val notificationChecked = notificationCheckBox.isChecked
             when {
-                storageChecked && notificationChecked -> {
-                }
                 storageChecked -> {
                     getPermission()
-                }
-                notificationChecked -> {
-                    // Request notification permission
                 }
             }
             dialog.dismiss()
