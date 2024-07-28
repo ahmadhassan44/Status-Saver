@@ -20,9 +20,10 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var appEntryUsecases: AppEntryUsecases
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        var keepSplashScreenOn = true
+        splashScreen.setKeepOnScreenCondition { keepSplashScreenOn }
         lifecycleScope.launch {
             // Wait for a single emission and then set the state
             val hasSeenOnboarding = appEntryUsecases.readAppEntry().first()
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                 Intent(this@MainActivity, HomeActivity::class.java)
             }
             startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }
     }
